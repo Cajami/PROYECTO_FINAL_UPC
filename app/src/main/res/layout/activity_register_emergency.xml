@@ -25,6 +25,7 @@
                 android:text="@string/tipo_emergencia"/>
 
             <Spinner
+                android:id="@+id/cboTipoEmergencia_RegisterEmergency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"></Spinner>
@@ -40,6 +41,7 @@
 
 
         <EditText
+            android:id="@+id/txtDetalle_RegisterEmergency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|left"
@@ -50,6 +52,7 @@
             android:scrollbars="vertical" />
 
         <Button
+            android:id="@+id/btnRegistrarEmergencia_RegisterEmergency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="REGISTRAR EMERGENCIA"
