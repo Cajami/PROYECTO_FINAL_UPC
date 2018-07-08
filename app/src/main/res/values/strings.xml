@@ -10,4 +10,9 @@
     <string name="repetir_clave">Repetir Clave</string>
     <string name="registrarUsuario">Registrar Usuario</string>
     <string name="tagMechanical">Mechanical</string>
+    <string name="registrar_emergencia">EMERGENCIA!!!</string>
+    <string name="emergencia_pendiente">Emergencia Pendiente</string>
+    <string name="editar_usuario">EDITAR USUARIO</string>
+    <string name="ver_proveedores">VER PROVEEDORES</string>
+    <string name="ver_historial_emergencias">VER HISTORIAL EMERGENCIAS</string>
 </resources>

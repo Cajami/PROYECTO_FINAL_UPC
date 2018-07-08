@@ -4,6 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/padding15dp"
     tools:context=".activities.MainClientActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnEmergenciaPendiente_MainUsuer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/emergencia_pendiente"
+                android:background="@color/colorAmarilloOscuro"/>
+
+            <Button
+                android:id="@+id/btnVerHistorialEmergencias_MainUsuer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTop15dp"
+                android:text="@string/ver_historial_emergencias" />
+
+            <Button
+                android:id="@+id/btnVerProveedores_MainUsuer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ver_proveedores" />
+
+            <Button
+                android:id="@+id/btnEditarUsuario_MainUsuer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/editar_usuario" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnRegistrarEmergencia_MainUsuer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRojo"
+            android:text="@string/registrar_emergencia"
+            android:textColor="@color/colorBlanco"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
