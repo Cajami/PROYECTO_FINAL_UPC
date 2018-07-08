@@ -15,4 +15,6 @@
     <string name="editar_usuario">EDITAR USUARIO</string>
     <string name="ver_proveedores">VER PROVEEDORES</string>
     <string name="ver_historial_emergencias">VER HISTORIAL EMERGENCIAS</string>
+    <string name="tipo_emergencia">Tipo Emergencia</string>
+    <string name="detalle">Detalle</string>
 </resources>
