@@ -37,7 +37,8 @@
             android:label="@string/registrarUsuario"
             android:parentActivityName=".LoginActivity" />
         <activity android:name=".activities.MainClientActivity" />
-        <activity android:name=".activities.RegisterEmergencyActivity"></activity>
+        <activity android:name=".activities.RegisterEmergencyActivity" />
+        <activity android:name=".activities.MainProviderActivity"></activity>
     </application>
 
 </manifest>

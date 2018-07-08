@@ -9,12 +9,19 @@ public class MechanicalApi {
         return BASE_URL + "autenticate";
     }
 
-    public static  String registerApi(){
-        return BASE_URL + "/register";
+    public static  String registerUsers(){
+        return BASE_URL + "registerUser";
     }
 
     private static String urlApi() {
         return BASE_URL + "api/";
+    }
+
+    public static String getTypesDocuments() {
+        return BASE_URL + "getTypeDocuments";
+    }
+    public static String getTypesUers() {
+        return BASE_URL + "getTypeUsers";
     }
 
 
