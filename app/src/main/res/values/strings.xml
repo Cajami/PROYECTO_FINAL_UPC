@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MechanicalAssistanceApp</string>
+    <string name="usuario">Usuario</string>
+    <string name="clave">Clave</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="tipo_usuario">Tipo Usuario</string>
+    <string name="tipo_documento">Tipo Documento</string>
+    <string name="nroDocumento">Nro Documento</string>
+    <string name="registrar">Registrar</string>
+    <string name="repetir_clave">Repetir Clave</string>
+    <string name="registrarUsuario">Registrar Usuario</string>
 </resources>
