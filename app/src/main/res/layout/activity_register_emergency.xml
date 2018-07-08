@@ -31,24 +31,25 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <TextView
+            android:layout_width="@dimen/width120dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/marginTop15dp"
+            android:text="@string/detalle"/>
+
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginTop15dp"
-            android:orientation="horizontal">
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:minLines="6"
+            android:scrollbars="vertical" />
 
 
-            <TextView
-                android:layout_width="@dimen/width120dp"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="@string/detalle"/>
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"></Spinner>
-        </LinearLayout>
 
     </LinearLayout>
 
