@@ -9,4 +9,5 @@
     <string name="registrar">Registrar</string>
     <string name="repetir_clave">Repetir Clave</string>
     <string name="registrarUsuario">Registrar Usuario</string>
+    <string name="tagMechanical">Mechanical</string>
 </resources>
