@@ -38,7 +38,11 @@
             android:parentActivityName=".LoginActivity" />
         <activity android:name=".activities.MainClientActivity" />
         <activity android:name=".activities.RegisterEmergencyActivity" />
-        <activity android:name=".activities.MainProviderActivity"></activity>
+        <activity android:name=".activities.MainProviderActivity" />
+        <activity
+            android:name=".activities.EditCustomerActivity"
+            android:label="Edit Customer" />
+        <activity android:name=".activities.EditProviderActivity"></activity>
     </application>
 
 </manifest>

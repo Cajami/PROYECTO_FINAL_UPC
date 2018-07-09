@@ -1,6 +1,8 @@
 package pe.cajami.com.mechanicalassistanceapp.models;
 
-public class TypeUser {
+import com.orm.SugarRecord;
+
+public class TypeUser extends SugarRecord {
     private int idtypeuser;
     private String name;
     private String description;

@@ -2,6 +2,8 @@ package pe.cajami.com.mechanicalassistanceapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +23,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import pe.cajami.com.mechanicalassistanceapp.LoginActivity;
 import pe.cajami.com.mechanicalassistanceapp.R;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.api.MechanicalApi;
 import pe.cajami.com.mechanicalassistanceapp.models.Customer;
+import pe.cajami.com.mechanicalassistanceapp.models.District;
 import pe.cajami.com.mechanicalassistanceapp.models.Provider;
 import pe.cajami.com.mechanicalassistanceapp.models.TypeDocument;
 import pe.cajami.com.mechanicalassistanceapp.models.TypeUser;
@@ -125,21 +129,37 @@ public class RegisterUserActivity extends AppCompatActivity {
                                         return;
                                     }
 
-                                    JSONObject usuarioResponnse = response.getJSONObject("user");
+                                    for (TypeUser u : arrayTipoUsusarios) {
+                                        u.save();
+                                    }
+
+                                    for (TypeDocument d : arrayTipoDocumentos) {
+                                        d.save();
+                                    }
 
                                     /*GUARDAMOS EL USUARIO*/
+                                    JSONObject usuarioResponnse = response.getJSONObject("user");
+
                                     User user = new User();
                                     user.setIduser(Integer.parseInt(usuarioResponnse.getString("iduser")))
                                             .setName(usuarioResponnse.getString("name"))
                                             .setPassword(usuarioResponnse.getString("password"))
-                                            .setIdtypeuser(Integer.parseInt(usuarioResponnse.getString("idtypeuser")));
+                                            .setIdtypeuser(Integer.parseInt(usuarioResponnse.getString("idtypeuser"))).save();
 
-                                    user.save();
+
+                                    JSONArray distritosResponde = response.getJSONArray("district");
+                                    District district = null;
+                                    for (int i = 0; i < distritosResponde.length(); i++) {
+                                        district = new District();
+                                        district.setIddistrict(Integer.parseInt(distritosResponde.getJSONObject(i).getString("iddistrict")))
+                                                .setName(distritosResponde.getJSONObject(i).getString("name"))
+                                                .save();
+                                    }
 
                                     Intent intent = null;
 
                                     if (response.has("customer")) {
-                                        intent = new Intent(RegisterUserActivity.this, MainClientActivity.class);
+                                        intent = new Intent(RegisterUserActivity.this, EditCustomerActivity.class);
 
                                         JSONObject customerResponde = response.getJSONObject("customer");
 
@@ -147,9 +167,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                                         customer.setIdcustomer(Integer.parseInt(customerResponde.getString("idcustomer")))
                                                 .setItypedocument(Integer.parseInt(customerResponde.getString("itypedocument")))
                                                 .setNrodocumento(customerResponde.getString("nrodocument"))
-                                                .setIduser(Integer.parseInt(customerResponde.getString("iduser")));
-
-                                        customer.save();
+                                                .setIduser(Integer.parseInt(customerResponde.getString("iduser")))
+                                                .save();
                                     } else {
                                         intent = new Intent(RegisterUserActivity.this, MainProviderActivity.class);
 
@@ -159,10 +178,20 @@ public class RegisterUserActivity extends AppCompatActivity {
                                         provider.setIdprovider(Integer.parseInt(providerResponde.getString("idprovider")))
                                                 .setItypedocument(Integer.parseInt(providerResponde.getString("itypedocument")))
                                                 .setNrodocument(providerResponde.getString("nrodocument"))
-                                                .setIduser(Integer.parseInt(providerResponde.getString("iduser")));
-
-                                        provider.save();
+                                                .setIduser(Integer.parseInt(providerResponde.getString("iduser")))
+                                                .save();
                                     }
+
+//                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RegisterUserActivity.this);
+//                                    SharedPreferences.Editor editor = preferences.edit();
+//                                    editor.putString("token", response.getString("token"));
+//                                    editor.apply();
+                                    SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
+                                    SharedPreferences.Editor editor = mPrefs.edit();
+                                    editor.putString("token", response.getString("token"));
+                                    editor.apply();
+
+
                                     /*PARA QUE NO SE REGRESE AL LOGIN*/
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

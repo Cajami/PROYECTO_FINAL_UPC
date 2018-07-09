@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding15dp"
+    tools:context=".activities.EditCustomerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tipo_documento"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/cboTipoDocumento_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nroDocumento"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtNroDocumento_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="@dimen/width120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:text="@string/nombre"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtNombre_EditCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="@dimen/width120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:text="@string/direcci_n"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/txtDireccion_EditCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/distrito"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/cboDistrito_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telefono"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtTelefono_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtEmail_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnGuardarModificaion_EditCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/guardar_modificacion" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

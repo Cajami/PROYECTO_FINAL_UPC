@@ -17,4 +17,12 @@
     <string name="ver_historial_emergencias">VER HISTORIAL EMERGENCIAS</string>
     <string name="tipo_emergencia">Tipo Emergencia</string>
     <string name="detalle">Detalle</string>
+    <string name="nombre">Nombre</string>
+    <string name="direcci_n">Dirección</string>
+    <string name="distrito">Distrito</string>
+    <string name="telefono">Telefono</string>
+    <string name="email">Email</string>
+    <string name="guardar_modificacion">GUARDAR MODIFICACION</string>
+
+    <string name="keypreference">mechanicalapp</string>
 </resources>
