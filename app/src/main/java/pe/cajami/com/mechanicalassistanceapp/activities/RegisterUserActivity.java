@@ -147,6 +147,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                                             .setIdtypeuser(Integer.parseInt(usuarioResponnse.getString("idtypeuser"))).save();
 
 
+                                    /*GUARDAMOS LOS DISTRITOS*/
                                     JSONArray distritosResponde = response.getJSONArray("district");
                                     District district = null;
                                     for (int i = 0; i < distritosResponde.length(); i++) {
@@ -182,10 +183,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                 .save();
                                     }
 
-//                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RegisterUserActivity.this);
-//                                    SharedPreferences.Editor editor = preferences.edit();
-//                                    editor.putString("token", response.getString("token"));
-//                                    editor.apply();
                                     SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
                                     SharedPreferences.Editor editor = mPrefs.edit();
                                     editor.putString("token", response.getString("token"));

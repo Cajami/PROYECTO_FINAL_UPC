@@ -66,28 +66,95 @@ public class EditCustomerActivity extends AppCompatActivity {
 
     public void getDistritos() {
         arrayDistritos = District.listAll(District.class);
-        String[] documentos = new String[arrayDistritos.size()];
-        for (int i = 0; i < arrayDistritos.size(); i++) {
-            documentos[i] = arrayDistritos.get(i).getName();
+        if (arrayDistritos.size() > 0) {
+            String[] documentos = new String[arrayDistritos.size()];
+
+            for (int i = 0; i < arrayDistritos.size(); i++) {
+                documentos[i] = arrayDistritos.get(i).getName();
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditCustomerActivity.this, android.R.layout.simple_spinner_item, documentos);
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            cboDistrito_EditCustomer.setAdapter(adapter);
+        } else {
+            AndroidNetworking.get(MechanicalApi.getDistrict())
+                    .setTag(getString(R.string.tagMechanical))
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray distritosResponde = response.getJSONArray("response");
+                                String[] distritos = new String[distritosResponde.length()];
+
+                                District district = null;
+                                for (int i = 0; i < distritosResponde.length(); i++) {
+                                    district = new District();
+                                    district.setIddistrict(Integer.parseInt(distritosResponde.getJSONObject(i).getString("iddistrict")))
+                                            .setName(distritosResponde.getJSONObject(i).getString("name"))
+                                            .save();
+                                }
+                                getDistritos();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            FunctionsGeneral.showMessageErrorUser(EditCustomerActivity.this, "Error!!!");
+                        }
+                    });
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditCustomerActivity.this, android.R.layout.simple_spinner_item, documentos);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cboDistrito_EditCustomer.setAdapter(adapter);
     }
 
-    public void  getTypeDocumens() {
+    public void getTypeDocumens() {
         arrayTipoDocumentos = TypeDocument.listAll(TypeDocument.class);
-        String[] documentos = new String[arrayTipoDocumentos.size()];
-        for (int i = 0; i < arrayTipoDocumentos.size(); i++) {
-            documentos[i] = arrayTipoDocumentos.get(i).getDescription();
+        if (arrayTipoDocumentos.size() > 0) {
+            String[] documentos = new String[arrayTipoDocumentos.size()];
+            for (int i = 0; i < arrayTipoDocumentos.size(); i++) {
+                documentos[i] = arrayTipoDocumentos.get(i).getDescription();
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditCustomerActivity.this, android.R.layout.simple_spinner_item, documentos);
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            cboTipoDocumento_EditCustomer.setAdapter(adapter);
+        } else {
+            AndroidNetworking.get(MechanicalApi.getTypesDocuments())
+                    .setTag(getString(R.string.tagMechanical))
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray lista = response.getJSONArray("response");
+                                String[] documentos = new String[lista.length()];
+
+                                TypeDocument item = null;
+                                for (int i = 0; i < lista.length(); i++) {
+                                    item = new TypeDocument();
+                                    item.setIdtypedocument(Integer.parseInt(lista.getJSONObject(i).getString("idtypedocument")));
+                                    item.setDescription(lista.getJSONObject(i).getString("description"));
+                                    documentos[i] = item.getDescription();
+                                    item.save();
+                                }
+
+                                getTypeDocumens();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            FunctionsGeneral.showMessageErrorUser(EditCustomerActivity.this, "Error!!!");
+                        }
+                    });
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditCustomerActivity.this, android.R.layout.simple_spinner_item, documentos);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cboTipoDocumento_EditCustomer.setAdapter(adapter);
     }
 
 

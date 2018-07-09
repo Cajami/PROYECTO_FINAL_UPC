@@ -5,11 +5,11 @@ public class MechanicalApi {
     private static String BASE_URL = "http://192.168.1.6:3000/";
 
 
-    public static  String loginApi(){
+    public static String loginApi() {
         return BASE_URL + "autenticate";
     }
 
-    public static  String registerUsers(){
+    public static String registerUsers() {
         return BASE_URL + "registerUser";
     }
 
@@ -20,11 +20,13 @@ public class MechanicalApi {
     public static String getTypesDocuments() {
         return BASE_URL + "getTypeDocuments";
     }
+
     public static String getTypesUers() {
         return BASE_URL + "getTypeUsers";
     }
 
-
-
+    public static String getDistrict() {
+        return BASE_URL + "getDistrict";
+    }
 
 }

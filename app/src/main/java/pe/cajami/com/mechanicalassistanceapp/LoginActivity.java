@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.tv.TvContract;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONObject;
 
+import java.util.Currency;
 import java.util.List;
 
 import pe.cajami.com.mechanicalassistanceapp.activities.EditCustomerActivity;
@@ -47,17 +49,17 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
 
         if (mPrefs.getString("token", "").length() > 0) {
-            Intent intent =null;
+            Intent intent = null;
 
             List<Customer> customer = Customer.listAll(Customer.class);
-            if (customer.size()==0){
+            if (customer.size() == 0) {
                 Provider provider = Provider.listAll(Provider.class).get(0);
                 if (provider.getName() == null)
                     intent = new Intent(LoginActivity.this, EditProviderActivity.class);
                 else
                     intent = new Intent(LoginActivity.this, MainProviderActivity.class);
-            }else{
-                if (customer.get(0).getName()== null)
+            } else {
+                if (customer.get(0).getName() == null)
                     intent = new Intent(LoginActivity.this, EditCustomerActivity.class);
                 else
                     intent = new Intent(LoginActivity.this, MainClientActivity.class);
@@ -115,7 +117,64 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("token", response.getString("token"));
                                     editor.apply();
 
-                                    Intent intent = new Intent(LoginActivity.this, MainClientActivity.class);
+                                    /*BORRAMOS CUSTOMER Y PROVIDER*/
+                                    Customer.deleteAll(Customer.class);
+                                    Provider.deleteAll(Provider.class);
+
+                                    Intent intent = null;
+
+                                    if (response.has("customer")) {
+                                        JSONObject customerResponde = response.getJSONObject("customer");
+
+                                        Customer customer = new Customer();
+
+                                        customer.setIdcustomer(Integer.parseInt(customerResponde.getString("idcustomer")))
+                                                .setItypedocument(Integer.parseInt(customerResponde.getString("itypedocument")))
+                                                .setNrodocumento(customerResponde.getString("nrodocument"))
+                                                .setIduser(Integer.parseInt(customerResponde.getString("iduser")));
+
+                                        if (response.isNull("name"))
+                                            intent = new Intent(LoginActivity.this, EditCustomerActivity.class);
+                                        else {
+                                            intent = new Intent(LoginActivity.this, MainClientActivity.class);
+
+                                            customer.setName(customerResponde.getString("name"))
+                                                    .setAddress(customerResponde.getString("address"))
+                                                    .setIddistrict(Integer.parseInt(customerResponde.getString("iddistrict")))
+                                                    .setPhone(customerResponde.getString("phone"))
+                                                    .setEmail(customerResponde.getString("email"));
+                                        }
+                                        customer.save();
+
+                                    } else {
+                                        JSONObject providerResponde = response.getJSONObject("provider");
+
+                                        Provider provider = new Provider();
+                                        provider.setIdprovider(providerResponde.getInt("idprovider"))
+                                                .setItypedocument(providerResponde.getInt("itypedocument"))
+                                                .setNrodocument(providerResponde.getString("nrodocument"))
+                                                .setIduser(Integer.parseInt(providerResponde.getString("iduser")));
+
+                                        if (providerResponde.isNull("name"))
+                                            intent = new Intent(LoginActivity.this, EditProviderActivity.class);
+                                        else {
+                                            intent = new Intent(LoginActivity.this, MainProviderActivity.class);
+
+                                            provider.setName(providerResponde.getString("name"))
+                                                    .setAddress(providerResponde.getString("address"))
+                                                    .setIddistrict(providerResponde.getInt("iddistrict"))
+                                                    .setContact(providerResponde.getString("contact"))
+                                                    .setPhone(providerResponde.getString("phone"))
+                                                    .setEmail(providerResponde.getString("email"))
+                                                    .setWeb(providerResponde.getString("web"))
+                                                    .setLongitude(providerResponde.getDouble("longitude"))
+                                                    .setLatitude(providerResponde.getDouble("latitude"))
+                                                    .setScore(providerResponde.getInt("score"))
+                                                    .setSchedule(providerResponde.getString("schedule"));
+                                        }
+                                        provider.save();
+                                    }
+
                                     startActivity(intent);
                                     finish();
                                 } catch (Exception e) {
