@@ -65,6 +65,8 @@
                 android:id="@+id/txtNroDocumento_RegisterUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="number"
                 android:layout_weight="1"></EditText>
         </LinearLayout>
 
@@ -85,6 +87,7 @@
                 android:id="@+id/txtUsuario_RegisterUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:layout_weight="1"></EditText>
         </LinearLayout>
 
@@ -104,6 +107,7 @@
                 android:id="@+id/txtClave_RegisterUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:layout_weight="1"></EditText>
         </LinearLayout>
 
@@ -123,6 +127,7 @@
                 android:id="@+id/txtClaveRepetir_RegisterUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:layout_weight="1"></EditText>
         </LinearLayout>
 
