@@ -29,7 +29,11 @@ public class MechanicalApi {
         return BASE_URL + "getDistrict";
     }
 
-    public static String editCustomer(){
+    public static String getBrands() {
+        return BASE_URL + "getBrands";
+    }
+
+    public static String editCustomer() {
         return urlApi() + "editCustomer";
     }
 

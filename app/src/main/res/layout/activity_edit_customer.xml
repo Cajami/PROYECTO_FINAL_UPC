@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding15dp"
     tools:context=".activities.EditCustomerActivity">
 
     <LinearLayout
@@ -20,6 +19,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="@dimen/padding15dp"
+
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -151,6 +152,71 @@
                         android:singleLine="true" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/marca_auto"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/cboMarca_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"></Spinner>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modelo_auto"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtModelo_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginTop15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/a_o_auto"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtAnio_EditCustomer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:maxLength="4"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

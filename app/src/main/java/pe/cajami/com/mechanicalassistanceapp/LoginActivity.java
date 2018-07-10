@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Customer.deleteAll(Customer.class);
                                     Provider.deleteAll(Provider.class);
 
+
                                     Intent intent = null;
 
                                     if (response.has("customer")) {
