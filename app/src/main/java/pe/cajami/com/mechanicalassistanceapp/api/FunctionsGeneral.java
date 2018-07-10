@@ -18,6 +18,51 @@ public class FunctionsGeneral {
         MostrarAlertDialog(context, "(ERROR)", mensaje, R.drawable.ic_error_outline_black_24dp);
     }
 
+    public static void showMessageAlertUser(Context context, String title, String message, DialogInterface.OnClickListener respuestaAceptar) {
+        if (respuestaAceptar == null) {
+            respuestaAceptar = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            };
+        }
+        MostrarAlertDialog(context, title, message, R.drawable.info, "Aceptar", "", respuestaAceptar, null);
+    }
+
+    public static void showMessageConfirmationUser(Context context, String message,
+                                                   DialogInterface.OnClickListener respuestaOK,
+                                                   DialogInterface.OnClickListener respuestaCancelar) {
+
+        if (respuestaCancelar == null) {
+            respuestaCancelar = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            };
+        }
+        MostrarAlertDialog(context, "¿Está seguro?", message, R.drawable.question, "SI", "NO", respuestaOK, respuestaCancelar);
+    }
+
+    private static void MostrarAlertDialog(Context context, String title, String message, int icon,
+                                           String positiveButton, String cancelButton,
+                                           DialogInterface.OnClickListener respuestaOK,
+                                           DialogInterface.OnClickListener respuestaNO) {
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(Html.fromHtml(message))
+                .setIcon(icon)
+                .setCancelable(false)
+                .setPositiveButton(positiveButton, respuestaOK);
+
+        if (respuestaNO != null)
+            dialogo.setNegativeButton(cancelButton, respuestaNO);
+
+        dialogo.show();
+    }
+
     private static void MostrarAlertDialog(
             Context context,
             String titulo,

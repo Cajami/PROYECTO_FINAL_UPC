@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import pe.cajami.com.mechanicalassistanceapp.R;
+import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
+import pe.cajami.com.mechanicalassistanceapp.models.Customer;
 
 public class MainCustomerActivity extends AppCompatActivity {
 
@@ -28,12 +30,29 @@ public class MainCustomerActivity extends AppCompatActivity {
         btnRegistrarEmergencia_MainUsuer = (Button) findViewById(R.id.btnRegistrarEmergencia_MainUsuer);
 
         btnEditarUsuario_MainUsuer.setOnClickListener(btnEditarUsuario_OnClickListener);
+        btnRegistrarEmergencia_MainUsuer.setOnClickListener(btnRegistrarEmergencia_OnClickListener);
+
     }
 
     View.OnClickListener btnEditarUsuario_OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainCustomerActivity.this,EditCustomerActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener btnRegistrarEmergencia_OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Customer customer = Customer.listAll(Customer.class).get(0);
+
+            if (customer.getName()==null){
+                FunctionsGeneral.showMessageErrorUser(MainCustomerActivity.this,"Debe registrar sus datos antes de reportar emergencias");
+                return;
+            }
+
+            Intent intent = new Intent(MainCustomerActivity.this,RegisterEmergencyActivity.class);
             startActivity(intent);
         }
     };

@@ -20,28 +20,32 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btnEmergenciasXCotizar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#f7c53c"
-                android:text="EMERGENCIAS X COTIZAR" />
+                android:text="@string/emergencias_x_cotizar" />
 
             <Button
+                android:id="@+id/btnEmergenciaAsignada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="EMERGENCIA ASIGNADA" />
+                android:text="@string/emergencia_asignada" />
 
             <Button
+                android:id="@+id/btnVerHistorialEmergencias"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ver Historial Emergencias" />
+                android:text="@string/ver_historial" />
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnEditarProveedor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Editar Proveedor" />
+            android:text="@string/editar_proveedor" />
 
     </LinearLayout>
 

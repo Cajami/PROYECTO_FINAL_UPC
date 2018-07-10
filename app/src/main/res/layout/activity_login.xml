@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="elsolitario"
+                android:text="ADMIN"
                 android:singleLine="true"/>
         </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:inputType="textPassword"
-                android:text="123"
+                android:text="ADMIN"
                 android:singleLine="true"/>
         </LinearLayout>
 

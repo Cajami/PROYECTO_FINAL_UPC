@@ -15,6 +15,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import pe.cajami.com.mechanicalassistanceapp.activities.MainProviderActivity;
 import pe.cajami.com.mechanicalassistanceapp.activities.RegisterUserActivity;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.api.MechanicalApi;
+import pe.cajami.com.mechanicalassistanceapp.models.Car;
 import pe.cajami.com.mechanicalassistanceapp.models.Customer;
 import pe.cajami.com.mechanicalassistanceapp.models.Provider;
 
@@ -119,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                                     /*BORRAMOS CUSTOMER Y PROVIDER*/
                                     Customer.deleteAll(Customer.class);
                                     Provider.deleteAll(Provider.class);
-
+                                    Car.deleteAll(Car.class);
 
                                     Intent intent = null;
 
@@ -128,12 +130,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                         Customer customer = new Customer();
 
-                                        customer.setIdcustomer(Integer.parseInt(customerResponde.getString("idcustomer")))
-                                                .setItypedocument(Integer.parseInt(customerResponde.getString("itypedocument")))
+                                        customer.setIdcustomer(customerResponde.getInt("idcustomer"))
+                                                .setItypedocument(customerResponde.getInt("itypedocument"))
                                                 .setNrodocumento(customerResponde.getString("nrodocument"))
                                                 .setIduser(Integer.parseInt(customerResponde.getString("iduser")));
 
-                                        if (response.isNull("name"))
+                                        if (customerResponde.isNull("name"))
                                             intent = new Intent(LoginActivity.this, EditCustomerActivity.class);
                                         else {
                                             intent = new Intent(LoginActivity.this, MainCustomerActivity.class);
@@ -143,6 +145,17 @@ public class LoginActivity extends AppCompatActivity {
                                                     .setIddistrict(Integer.parseInt(customerResponde.getString("iddistrict")))
                                                     .setPhone(customerResponde.getString("phone"))
                                                     .setEmail(customerResponde.getString("email"));
+
+                                            JSONArray carResponde = response.getJSONArray("car");
+                                            if (carResponde.length()>0){
+                                                Car car = new Car();
+                                                car.setIdcar(carResponde.getJSONObject(0).getInt("idcar"))
+                                                        .setIdcustomer(carResponde.getJSONObject(0).getInt("idcustomer"))
+                                                        .setIdbrand(carResponde.getJSONObject(0).getInt("idbrand"))
+                                                        .setModel(carResponde.getJSONObject(0).getString("modelo"))
+                                                        .setYear(carResponde.getJSONObject(0).getInt("year"))
+                                                        .save();
+                                            }
                                         }
                                         customer.save();
 

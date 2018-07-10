@@ -36,14 +36,24 @@
             android:name=".activities.RegisterUserActivity"
             android:label="@string/registrarUsuario"
             android:parentActivityName=".LoginActivity" />
-        <activity android:name=".activities.MainCustomerActivity" android:label="@string/cliente" />
-        <activity android:name=".activities.RegisterEmergencyActivity" />
-        <activity android:name=".activities.MainProviderActivity" android:label="@string/proveedor"/>
+        <activity
+            android:name=".activities.MainCustomerActivity"
+            android:label="@string/cliente" />
+        <activity
+            android:name=".activities.RegisterEmergencyActivity"
+            android:label="Registrar Emergencia"
+            android:parentActivityName=".activities.MainCustomerActivity"/>
+        <activity
+            android:name=".activities.MainProviderActivity"
+            android:label="@string/proveedor" />
         <activity
             android:name=".activities.EditCustomerActivity"
-            android:parentActivityName=".activities.MainCustomerActivity"
-            android:label="Edit Customer" />
-        <activity android:name=".activities.EditProviderActivity"></activity>
+            android:label="Editar Cliente"
+            android:parentActivityName=".activities.MainCustomerActivity" />
+        <activity
+            android:name=".activities.EditProviderActivity"
+            android:label="Editar Proveedor"
+            android:parentActivityName=".activities.MainProviderActivity"></activity>
     </application>
 
 </manifest>
