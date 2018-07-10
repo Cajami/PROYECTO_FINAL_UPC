@@ -1,14 +1,10 @@
 package pe.cajami.com.mechanicalassistanceapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.tv.TvContract;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +17,11 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONObject;
 
-import java.util.Currency;
 import java.util.List;
 
 import pe.cajami.com.mechanicalassistanceapp.activities.EditCustomerActivity;
 import pe.cajami.com.mechanicalassistanceapp.activities.EditProviderActivity;
-import pe.cajami.com.mechanicalassistanceapp.activities.MainClientActivity;
+import pe.cajami.com.mechanicalassistanceapp.activities.MainCustomerActivity;
 import pe.cajami.com.mechanicalassistanceapp.activities.MainProviderActivity;
 import pe.cajami.com.mechanicalassistanceapp.activities.RegisterUserActivity;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
@@ -62,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (customer.get(0).getName() == null)
                     intent = new Intent(LoginActivity.this, EditCustomerActivity.class);
                 else
-                    intent = new Intent(LoginActivity.this, MainClientActivity.class);
+                    intent = new Intent(LoginActivity.this, MainCustomerActivity.class);
             }
             startActivity(intent);
             finish();
@@ -136,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (response.isNull("name"))
                                             intent = new Intent(LoginActivity.this, EditCustomerActivity.class);
                                         else {
-                                            intent = new Intent(LoginActivity.this, MainClientActivity.class);
+                                            intent = new Intent(LoginActivity.this, MainCustomerActivity.class);
 
                                             customer.setName(customerResponde.getString("name"))
                                                     .setAddress(customerResponde.getString("address"))

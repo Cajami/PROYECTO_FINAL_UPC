@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import pe.cajami.com.mechanicalassistanceapp.R;
 
-public class MainClientActivity extends AppCompatActivity {
+public class MainCustomerActivity extends AppCompatActivity {
 
     Button btnEmergenciaPendiente_MainUsuer,
             btnVerHistorialEmergencias_MainUsuer,

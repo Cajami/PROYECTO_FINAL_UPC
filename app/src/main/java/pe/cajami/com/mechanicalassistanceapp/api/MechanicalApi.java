@@ -29,4 +29,8 @@ public class MechanicalApi {
         return BASE_URL + "getDistrict";
     }
 
+    public static String editCustomer(){
+        return urlApi() + "editCustomer";
+    }
+
 }

@@ -36,11 +36,12 @@
             android:name=".activities.RegisterUserActivity"
             android:label="@string/registrarUsuario"
             android:parentActivityName=".LoginActivity" />
-        <activity android:name=".activities.MainClientActivity" />
+        <activity android:name=".activities.MainCustomerActivity" />
         <activity android:name=".activities.RegisterEmergencyActivity" />
         <activity android:name=".activities.MainProviderActivity" />
         <activity
             android:name=".activities.EditCustomerActivity"
+            android:parentActivityName=".activities.MainCustomerActivity"
             android:label="Edit Customer" />
         <activity android:name=".activities.EditProviderActivity"></activity>
     </application>
