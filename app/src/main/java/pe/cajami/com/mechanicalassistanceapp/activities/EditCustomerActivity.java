@@ -71,7 +71,6 @@ public class EditCustomerActivity extends AppCompatActivity {
         btnGuardarModificaion_EditCustomer = (Button) findViewById(R.id.btnGuardarModificaion_EditCustomer);
 
         SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
-
         token = mPrefs.getString("token", "");
 
         btnGuardarModificaion_EditCustomer.setOnClickListener(btnGuardarModificacion_OnClickListener);

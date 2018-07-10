@@ -28,4 +28,6 @@
     <string name="marca_auto">Marca Auto</string>
     <string name="modelo_auto">Modelo Auto</string>
     <string name="a_o_auto">Año Auto</string>
+    <string name="nombre_razonsocial">Nombre / Razón Social</string>
+    <string name="web">Web</string>
 </resources>

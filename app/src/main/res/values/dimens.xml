@@ -4,4 +4,6 @@
     <dimen name="marginTop20dp">20dp</dimen>
     <dimen name="marginTop15dp">15dp</dimen>
     <dimen name="width120dp">120dp</dimen>
+    <dimen name="marginTop10dp">10dp</dimen>
+    <dimen name="width80dp">80dp</dimen>
 </resources>
