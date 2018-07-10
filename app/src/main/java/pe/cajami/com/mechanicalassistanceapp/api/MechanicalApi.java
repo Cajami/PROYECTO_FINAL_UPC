@@ -36,5 +36,8 @@ public class MechanicalApi {
     public static String editCustomer() {
         return urlApi() + "editCustomer";
     }
+    public static String editProvider() {
+        return urlApi() + "editProvider";
+    }
 
 }

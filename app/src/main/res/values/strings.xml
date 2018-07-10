@@ -30,4 +30,6 @@
     <string name="a_o_auto">Año Auto</string>
     <string name="nombre_razonsocial">Nombre / Razón Social</string>
     <string name="web">Web</string>
+    <string name="cliente">Cliente</string>
+    <string name="proveedor">Proveedor</string>
 </resources>

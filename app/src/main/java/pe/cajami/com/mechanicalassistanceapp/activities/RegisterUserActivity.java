@@ -169,7 +169,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                 .setIduser(Integer.parseInt(customerResponde.getString("iduser")))
                                                 .save();
                                     } else {
-                                        intent = new Intent(RegisterUserActivity.this, MainProviderActivity.class);
+                                        intent = new Intent(RegisterUserActivity.this, EditProviderActivity.class);
 
                                         JSONObject providerResponde = response.getJSONObject("provider");
 

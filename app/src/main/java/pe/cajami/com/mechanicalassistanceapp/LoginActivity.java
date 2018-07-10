@@ -40,10 +40,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        startActivity(new Intent(LoginActivity.this, EditProviderActivity.class));
-        finish();
-        if (true)
-            return;
+//        startActivity(new Intent(LoginActivity.this, EditProviderActivity.class));
+//        finish();
+//        if (true)
+//            return;
 
         SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
 
