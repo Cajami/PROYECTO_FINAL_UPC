@@ -36,5 +36,6 @@
     <string name="editar_proveedor">Editar Proveedor</string>
     <string name="emergencia_asignada">EMERGENCIA ASIGNADA</string>
     <string name="emergencias_x_cotizar">EMERGENCIAS X COTIZAR</string>
+    <string name="fecha_registro">Fecha Registro</string>
 
 </resources>

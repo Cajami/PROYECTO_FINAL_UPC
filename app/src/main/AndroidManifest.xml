@@ -42,7 +42,7 @@
         <activity
             android:name=".activities.RegisterEmergencyActivity"
             android:label="Registrar Emergencia"
-            android:parentActivityName=".activities.MainCustomerActivity"/>
+            android:parentActivityName=".activities.MainCustomerActivity" />
         <activity
             android:name=".activities.MainProviderActivity"
             android:label="@string/proveedor" />
@@ -53,7 +53,8 @@
         <activity
             android:name=".activities.EditProviderActivity"
             android:label="Editar Proveedor"
-            android:parentActivityName=".activities.MainProviderActivity"></activity>
+            android:parentActivityName=".activities.MainProviderActivity" />
+        <activity android:name=".activities.EmergencyPendingActivity"></activity>
     </application>
 
 </manifest>

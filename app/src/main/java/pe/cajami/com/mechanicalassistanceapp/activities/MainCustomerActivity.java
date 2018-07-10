@@ -30,6 +30,7 @@ public class MainCustomerActivity extends AppCompatActivity {
         btnRegistrarEmergencia_MainUsuer = (Button) findViewById(R.id.btnRegistrarEmergencia_MainUsuer);
 
         btnEditarUsuario_MainUsuer.setOnClickListener(btnEditarUsuario_OnClickListener);
+        btnEmergenciaPendiente_MainUsuer.setOnClickListener(btnEmergenciaPendienteOnClickListener);
         btnRegistrarEmergencia_MainUsuer.setOnClickListener(btnRegistrarEmergencia_OnClickListener);
 
     }
@@ -53,6 +54,14 @@ public class MainCustomerActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent(MainCustomerActivity.this,RegisterEmergencyActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener btnEmergenciaPendienteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainCustomerActivity.this,EmergencyPendingActivity.class);
             startActivity(intent);
         }
     };
