@@ -24,22 +24,31 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/lblTipoEmergencia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/marginTop15dp"
-            android:text="@string/detalle"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/marginTop15dp" />
+            <TextView
+                android:layout_width="@dimen/width120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/detalle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblDetalle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,6 +63,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/lblFechaRegistro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -75,12 +85,14 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/btnRefrescar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_refresh_black_24dp" />
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvProveedores"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

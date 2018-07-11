@@ -181,9 +181,12 @@ public class LoginActivity extends AppCompatActivity {
                                                     .setEmail(providerResponde.getString("email"))
                                                     .setWeb(providerResponde.getString("web"))
                                                     .setLongitude(providerResponde.getDouble("longitude"))
-                                                    .setLatitude(providerResponde.getDouble("latitude"))
-                                                    .setScore(providerResponde.getInt("score"))
-                                                    .setSchedule(providerResponde.getString("schedule"));
+                                                    .setLatitude(providerResponde.getDouble("latitude"));
+
+                                            if (!providerResponde.isNull("score"))
+                                                    provider.setScore(providerResponde.getInt("score"));
+                                            if (!providerResponde.isNull("schedule"))
+                                                    provider.setSchedule(providerResponde.getString("schedule"));
                                         }
                                         provider.save();
                                     }

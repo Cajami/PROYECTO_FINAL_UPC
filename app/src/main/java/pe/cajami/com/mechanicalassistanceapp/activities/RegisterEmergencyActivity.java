@@ -112,7 +112,7 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
             AndroidNetworking.post(MechanicalApi.insertRequests())
                     .addBodyParameter("idcar", String.valueOf(cars.get(0).getIdcar()))
                     .addBodyParameter("details", txtDetalle_RegisterEmergency.getText().toString().trim())
-
+                    .addBodyParameter("idflaw",String.valueOf(arrayFallas.get(cboTipoEmergencia_RegisterEmergency.getSelectedItemPosition()).getIdflaw()))
                     .setTag(getString(R.string.tagMechanical))
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -121,7 +121,6 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                //SimpleDateFormat dateFormat = new SimpleDateFormat();
 
                                 JSONObject requestJSON = response.getJSONObject("request");
                                 Request request = new Request();
@@ -130,6 +129,7 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
                                         .setIdcar(requestJSON.getInt("idcar"))
                                         .setIdstate(requestJSON.getString("idstate"))
                                         .setDetails(requestJSON.getString("details"))
+                                        .setIdflaw(requestJSON.getInt("idflaw"))
                                         .save();
 
                                 FunctionsGeneral.showMessageAlertUser(RegisterEmergencyActivity.this, "Se Registró", "Emergencia", new DialogInterface.OnClickListener() {
