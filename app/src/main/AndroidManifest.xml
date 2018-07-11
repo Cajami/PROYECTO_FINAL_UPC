@@ -54,9 +54,11 @@
             android:name=".activities.EditProviderActivity"
             android:label="Editar Proveedor"
             android:parentActivityName=".activities.MainProviderActivity" />
-        <activity android:name=".activities.EmergencyPendingActivity"
+        <activity
+            android:name=".activities.EmergencyPendingActivity"
             android:label="Emergencia Registrada"
-            android:parentActivityName=".activities.MainCustomerActivity"></activity>
+            android:parentActivityName=".activities.MainCustomerActivity" />
+        <activity android:name=".activities.EmergencyFreeActivity"></activity>
     </application>
 
 </manifest>
