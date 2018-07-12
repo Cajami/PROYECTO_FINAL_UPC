@@ -11,17 +11,19 @@ public class Request extends SugarRecord {
     private String idstate;
     private String details;
     private int idflaw;
+    private String description;
 
     public Request() {
     }
 
-    public Request(int idrequest, Date date, int idcar, String idstate, String details, int idflaw) {
+    public Request(int idrequest, Date date, int idcar, String idstate, String details, int idflaw, String description) {
         this.idrequest = idrequest;
         this.date = date;
         this.idcar = idcar;
         this.idstate = idstate;
         this.details = details;
         this.idflaw = idflaw;
+        this.description = description;
     }
 
     public int getIdrequest() {
@@ -75,6 +77,15 @@ public class Request extends SugarRecord {
 
     public Request setIdflaw(int idflaw) {
         this.idflaw = idflaw;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Request setDescription(String description) {
+        this.description = description;
         return this;
     }
 }

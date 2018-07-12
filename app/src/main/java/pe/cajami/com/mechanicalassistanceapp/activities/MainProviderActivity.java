@@ -23,12 +23,21 @@ public class MainProviderActivity extends AppCompatActivity {
         btnEditarProveedor = (Button) findViewById(R.id.btnEditarProveedor);
 
         btnEditarProveedor.setOnClickListener(btnEditarProveedor_OnClickListener);
+        btnEmergenciasXCotizar.setOnClickListener(btnEmergenciasXCotizarOnClickListener);
     }
 
     View.OnClickListener btnEditarProveedor_OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainProviderActivity.this,EditProviderActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener btnEmergenciasXCotizarOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainProviderActivity.this,EmergencyFreeActivity.class);
             startActivity(intent);
         }
     };
