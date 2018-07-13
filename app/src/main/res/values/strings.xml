@@ -38,5 +38,7 @@
     <string name="emergencias_x_cotizar">EMERGENCIAS X COTIZAR</string>
     <string name="fecha_registro">Fecha Registro</string>
     <string name="postular">POSTULAR</string>
+    <string name="puntuacion">Puntuación</string>
+    <string name="distancia">Distancia</string>
 
 </resources>

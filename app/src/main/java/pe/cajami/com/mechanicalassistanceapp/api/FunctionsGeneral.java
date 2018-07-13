@@ -121,17 +121,24 @@ public class FunctionsGeneral {
         return mPrefs.getString("token", "");
     }
 
-    public static String getDateToString(Date fecha){
+    public static String getDateToString(Date fecha) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateFormat.format(fecha);
     }
 
-    public static Date getStringToDate(String fecha){
-        try{
+    public static Date getStringToDate(String fecha) {
+        try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             return dateFormat.parse(fecha);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
+
+    public static String getStaticmap(double latitud, double longitude) {
+        return "https://maps.googleapis.com/maps/api/staticmap?center="+ latitud + ","+ longitude +
+                "&zoom=16&size=500x300&markers=icon:http%3A%2F%2Fgoo.gl%2FGjVUSC|"+ latitud+ ","+longitude;
+    }
+
+
 }

@@ -1,11 +1,14 @@
 package pe.cajami.com.mechanicalassistanceapp.activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.textclassifier.TextLinks;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,12 +17,17 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.widget.ANImageView;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import pe.cajami.com.mechanicalassistanceapp.R;
+import pe.cajami.com.mechanicalassistanceapp.api.AddressLocation;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.api.MechanicalApi;
 import pe.cajami.com.mechanicalassistanceapp.models.Provider;
@@ -37,6 +45,9 @@ public class EmergencyPostulateActivity extends AppCompatActivity {
 
     String token = "";
     Provider provider;
+
+    AddressLocation addressLocation = null;
+    FusedLocationProviderClient mFusedLocationClient;
 
 
     @Override
@@ -63,9 +74,46 @@ public class EmergencyPostulateActivity extends AppCompatActivity {
         request = Request.toBuilder(intent.getExtras());
         provider = Provider.listAll(Provider.class).get(0);
 
-        updateViewFrom();
-        getHistory();
-        imagenMap.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=-12.0448827,-77.1005715&zoom=17&size=500x300&markers=icon:http%3A%2F%2Fgoo.gl%2FGjVUSC|-12.0448827,-77.1005715");
+        btnPostular.setOnClickListener(btnPostularOnClickListener);
+
+        RxPermissions rxPermissions = new RxPermissions(EmergencyPostulateActivity.this);
+        rxPermissions
+                .request(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) // ask single or multiple permission once
+                .subscribe(granted -> {
+                    if (granted) {
+                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(EmergencyPostulateActivity.this);
+                        getLastLocation();
+
+                        updateViewFrom();
+                        getHistory();
+                    } else {
+                        FunctionsGeneral.showMessageConfirmationUser(EmergencyPostulateActivity.this, "Debe aceptar el permiso para compartir ubicación",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finish();
+                                    }
+                                }, null);
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            addressLocation = FunctionsGeneral.getAddrees(EmergencyPostulateActivity.this, task.getResult().getLatitude(), task.getResult().getLongitude());
+                        } else {
+                            addressLocation = new AddressLocation();
+                        }
+                    }
+                });
     }
 
     private void updateViewFrom() {
@@ -107,8 +155,13 @@ public class EmergencyPostulateActivity extends AppCompatActivity {
                                         .setLatitude(respuesta.getJSONObject(0).getDouble("latitude"))
                                         .setLongitude(respuesta.getJSONObject(0).getDouble("longitude"));
                                 btnRetirarPostulacion.setVisibility(View.VISIBLE);
-                            } else
+                            } else {
                                 btnPostular.setVisibility(View.VISIBLE);
+                                requestHistory.setIdprovider(provider.getIdprovider())
+                                        .setIdrequest(request.getIdrequest());
+                            }
+                            imagenMap.setImageUrl(FunctionsGeneral.getStaticmap(request.getLatitude(), request.getLongitude()));
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -121,4 +174,65 @@ public class EmergencyPostulateActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    View.OnClickListener btnPostularOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (requestHistory.getLatitude() == 0) {
+                requestHistory.setLatitude(addressLocation.getLatitude());
+                requestHistory.setLongitude(addressLocation.getLongitude());
+            }
+            FunctionsGeneral.showMessageConfirmationUser(EmergencyPostulateActivity.this, "¿Está seguro que desea postular a esta emergencia?",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            final ProgressDialog mProgressDialog = new ProgressDialog(EmergencyPostulateActivity.this);
+                            mProgressDialog.setCanceledOnTouchOutside(false);
+                            mProgressDialog.setMessage("Registrando Postulación...");
+                            mProgressDialog.show();
+
+                            AndroidNetworking.post(MechanicalApi.insertRequestsHistory())
+                                    .addBodyParameter("idrequesthistory", String.valueOf(requestHistory.getIdrequesthistory()))
+                                    .addBodyParameter("idrequest", String.valueOf(requestHistory.getIdrequest()))
+                                    .addBodyParameter("idprovider", String.valueOf(requestHistory.getIdprovider()))
+                                    .addBodyParameter("latitude", String.valueOf(requestHistory.getLatitude()))
+                                    .addBodyParameter("longitude", String.valueOf(requestHistory.getLongitude()))
+                                    .addBodyParameter("token", token)
+                                    .setTag(getString(R.string.tagMechanical))
+                                    .setPriority(Priority.MEDIUM)
+                                    .build()
+                                    .getAsJSONObject(new JSONObjectRequestListener() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            mProgressDialog.dismiss();
+
+                                            try {
+                                                JSONObject requestJSON = response.getJSONObject("request");
+
+                                                requestHistory.setIdrequesthistory(requestJSON.getInt("idrequesthistory"))
+                                                        .setDate(FunctionsGeneral.getStringToDate(requestJSON.getString("date")));
+
+                                                FunctionsGeneral.showMessageAlertUser(EmergencyPostulateActivity.this, "Registro Exitoso","Se registró su postulación" , new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        finish();
+                                                    }
+                                                });
+
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(ANError anError) {
+                                            mProgressDialog.dismiss();
+                                            FunctionsGeneral.showMessageErrorUser(EmergencyPostulateActivity.this, "Error!!!");
+                                        }
+                                    });
+                        }
+                    }, null);
+        }
+    };
 }

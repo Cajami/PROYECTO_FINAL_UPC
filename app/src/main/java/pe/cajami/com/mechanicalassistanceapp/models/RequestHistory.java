@@ -12,11 +12,16 @@ public class RequestHistory extends SugarRecord {
     private int idprovider;
     private double latitude;
     private double longitude;
+    private String nameProvider;
+    private String scoreProvider;
+
+    private double latitudeParent;
+    private double longitudeParent;
 
     public RequestHistory() {
     }
 
-    public RequestHistory(int idrequesthistory, int idrequest, Date date, String idstate, int idprovider, double latitude, double longitude) {
+    public RequestHistory(int idrequesthistory, int idrequest, Date date, String idstate, int idprovider, double latitude, double longitude, String nameProvider, String scoreProvider, double latitudeParent, double longitudeParent) {
         this.idrequesthistory = idrequesthistory;
         this.idrequest = idrequest;
         this.date = date;
@@ -24,6 +29,10 @@ public class RequestHistory extends SugarRecord {
         this.idprovider = idprovider;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.nameProvider = nameProvider;
+        this.scoreProvider = scoreProvider;
+        this.latitudeParent = latitudeParent;
+        this.longitudeParent = longitudeParent;
     }
 
     public int getIdrequesthistory() {
@@ -86,6 +95,42 @@ public class RequestHistory extends SugarRecord {
 
     public RequestHistory setLongitude(double longitude) {
         this.longitude = longitude;
+        return this;
+    }
+
+    public String getNameProvider() {
+        return nameProvider;
+    }
+
+    public RequestHistory setNameProvider(String nameProvider) {
+        this.nameProvider = nameProvider;
+        return this;
+    }
+
+    public String getScoreProvider() {
+        return scoreProvider;
+    }
+
+    public RequestHistory setScoreProvider(String scoreProvider) {
+        this.scoreProvider = scoreProvider;
+        return this;
+    }
+
+    public double getLatitudeParent() {
+        return latitudeParent;
+    }
+
+    public RequestHistory setLatitudeParent(double latitudeParent) {
+        this.latitudeParent = latitudeParent;
+        return this;
+    }
+
+    public double getLongitudeParent() {
+        return longitudeParent;
+    }
+
+    public RequestHistory setLongitudeParent(double longitudeParent) {
+        this.longitudeParent = longitudeParent;
         return this;
     }
 }

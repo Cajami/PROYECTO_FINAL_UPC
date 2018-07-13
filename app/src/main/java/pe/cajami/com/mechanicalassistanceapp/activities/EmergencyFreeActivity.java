@@ -97,24 +97,6 @@ public class EmergencyFreeActivity extends AppCompatActivity {
 
                             emergencyAdapter.setRequests(requests);
                             emergencyAdapter.notifyDataSetChanged();
-
-
-
-                            /*
-                            {"request":[
-                            {"idrequest":14,"date":"2018-07-13T15:41:56.000Z","idcar":5,"idstate":"P","details":"POR FAVOR URGENTE","idflaw":1,
-                            "district":"Cercado de Lima","address":"Wari 522, Cercado de Lima 15003, Perú","latitude":-12.0497795,
-                            "longitude":-77.014019,"description":"PONCHADO DE LLANTA"},
-
-
-                            {"idrequest":15,"date":"2018-07-13T15:42:43.000Z","idcar":5,"idstate":"P","details":"DEBO LLEGAR A MI REUNION LO ANTES POSIBLE",
-                            "idflaw":3,"district":"Cercado de Lima","address":"Wari 522, Cercado de Lima 15003, Perú","latitude":-12.0497795,"longitude":-77.014019,
-                            "description":"AUTO NO ARRANCA"}]}
-
-
-                             */
-
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

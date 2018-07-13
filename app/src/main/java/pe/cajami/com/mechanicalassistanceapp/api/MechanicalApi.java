@@ -49,6 +49,10 @@ public class MechanicalApi {
         return urlApi() + "insertRequests";
     }
 
+    public static String insertRequestsHistory() {
+        return urlApi() + "insertEmergencyFreeHistorial";
+    }
+
     public static String getEmergenciesFree() {
         return urlApi() + "getEmergencyFree";
     }
@@ -56,5 +60,12 @@ public class MechanicalApi {
     public static String getEmergencyFreeHistorial() {
         return urlApi() + "getEmergencyFreeHistorial";
     }
+
+
+    public static String getEmergencyProviders() {
+        return urlApi() + "getEmergencyProviders";
+    }
+
+
 
 }

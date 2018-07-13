@@ -64,7 +64,9 @@
             android:name=".activities.EmergencyFreeActivity"
             android:label="Emergencias Reportadas"
             android:parentActivityName=".activities.MainProviderActivity" />
-        <activity android:name=".activities.EmergencyPostulateActivity"></activity>
+        <activity android:name=".activities.EmergencyPostulateActivity"
+            android:label="Emergencia"
+            android:parentActivityName=".activities.EmergencyFreeActivity"></activity>
     </application>
 
 </manifest>
