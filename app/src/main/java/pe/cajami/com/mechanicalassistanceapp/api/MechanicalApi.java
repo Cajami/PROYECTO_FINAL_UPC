@@ -28,6 +28,7 @@ public class MechanicalApi {
     public static String getDistrict() {
         return BASE_URL + "getDistrict";
     }
+
     public static String getFlaws() {
         return BASE_URL + "getFlaws";
     }
@@ -39,6 +40,7 @@ public class MechanicalApi {
     public static String editCustomer() {
         return urlApi() + "editCustomer";
     }
+
     public static String editProvider() {
         return urlApi() + "editProvider";
     }
@@ -49,6 +51,10 @@ public class MechanicalApi {
 
     public static String getEmergenciesFree() {
         return urlApi() + "getEmergencyFree";
+    }
+
+    public static String getEmergencyFreeHistorial() {
+        return urlApi() + "getEmergencyFreeHistorial";
     }
 
 }

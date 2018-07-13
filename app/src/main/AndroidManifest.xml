@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pe.cajami.com.mechanicalassistanceapp">
 
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -60,8 +60,11 @@
             android:name=".activities.EmergencyPendingActivity"
             android:label="Emergencia Registrada"
             android:parentActivityName=".activities.MainCustomerActivity" />
-        <activity android:name=".activities.EmergencyFreeActivity"></activity>
-
+        <activity
+            android:name=".activities.EmergencyFreeActivity"
+            android:label="Emergencias Reportadas"
+            android:parentActivityName=".activities.MainProviderActivity" />
+        <activity android:name=".activities.EmergencyPostulateActivity"></activity>
     </application>
 
 </manifest>

@@ -56,11 +56,6 @@ public class EmergencyPendingActivity extends AppCompatActivity {
         }
 
         lblDetalle.setText(requests.get(0).getDetails());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        lblFechaRegistro.setText(dateFormat.format(requests.get(0).getDate()));
-
-
+        lblFechaRegistro.setText(FunctionsGeneral.getDateToString(requests.get(0).getDate()));
     }
 }

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/marginTop10dp"
+    tools:context=".activities.EmergencyPostulateActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tipo_emergencia"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblTipoEmergencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTop10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detalle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblDetalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTop10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distrito"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblDistrito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTop10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/direcci_n"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblDireccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <com.androidnetworking.widget.ANImageView
+                android:id="@+id/imagenMap"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="@dimen/marginTop10dp"
+                android:layout_marginTop="@dimen/marginTop10dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPostular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:visibility="gone"
+
+            android:text="@string/postular" />
+
+        <Button
+            android:id="@+id/btnRetirarPostulacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRojo"
+            android:visibility="gone"
+            android:text="RETIRAR POSTULACIÓN" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

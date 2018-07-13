@@ -190,12 +190,10 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
                             mProgressDialog.dismiss();
 
                             try {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
                                 JSONObject requestJSON = response.getJSONObject("request");
                                 Request request = new Request();
                                 request.setIdrequest(requestJSON.getInt("idrequest"))
-                                        .setDate(dateFormat.parse(requestJSON.getString("date")))//.substring(0,19)))
+                                        .setDate(FunctionsGeneral.getStringToDate(requestJSON.getString("date")))//.substring(0,19)))
                                         .setIdcar(requestJSON.getInt("idcar"))
                                         .setIdstate(requestJSON.getString("idstate"))
                                         .setDetails(requestJSON.getString("details"))

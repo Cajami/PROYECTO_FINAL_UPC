@@ -76,8 +76,6 @@ public class EmergencyFreeActivity extends AppCompatActivity {
                         try {
                             JSONArray requestArray = response.getJSONArray("request");
 
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
                             if (requests.size()>0)
                                 requests = new ArrayList<>();
 
@@ -85,7 +83,7 @@ public class EmergencyFreeActivity extends AppCompatActivity {
                             for (int i = 0; i < requestArray.length(); i++) {
                                 request = new Request();
                                 request.setIdrequest(requestArray.getJSONObject(i).getInt("idrequest"))
-                                        .setDate(dateFormat.parse(requestArray.getJSONObject(i).getString("date")))
+                                        .setDate(FunctionsGeneral.getStringToDate(requestArray.getJSONObject(i).getString("date")))
                                         .setIdcar(requestArray.getJSONObject(i).getInt("idcar"))
                                         .setDetails(requestArray.getJSONObject(i).getString("details"))
                                         .setIdflaw(requestArray.getJSONObject(i).getInt("idflaw"))

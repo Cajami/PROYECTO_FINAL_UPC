@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,7 +91,7 @@ public class FunctionsGeneral {
 
     }
 
-    public static AddressLocation getAddrees(Context context, double latitude,double longitude){
+    public static AddressLocation getAddrees(Context context, double latitude, double longitude) {
         AddressLocation address = new AddressLocation();
         Geocoder geocoder;
         List<android.location.Address> addresses;
@@ -114,9 +116,22 @@ public class FunctionsGeneral {
         return address;
     }
 
-    public  static String getToken(Context context){
-        SharedPreferences mPrefs =context.getSharedPreferences(context.getString(R.string.keypreference), MODE_PRIVATE); //add key
+    public static String getToken(Context context) {
+        SharedPreferences mPrefs = context.getSharedPreferences(context.getString(R.string.keypreference), MODE_PRIVATE); //add key
         return mPrefs.getString("token", "");
     }
 
+    public static String getDateToString(Date fecha){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(fecha);
+    }
+
+    public static Date getStringToDate(String fecha){
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            return dateFormat.parse(fecha);
+        }catch (Exception e){
+            return null;
+        }
+    }
 }
