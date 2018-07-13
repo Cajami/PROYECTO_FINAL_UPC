@@ -13,10 +13,15 @@ public class Request extends SugarRecord {
     private int idflaw;
     private String description;
 
+    private String district;
+    private String address;
+    private double latitude;
+    private double longitude;
+
     public Request() {
     }
 
-    public Request(int idrequest, Date date, int idcar, String idstate, String details, int idflaw, String description) {
+    public Request(int idrequest, Date date, int idcar, String idstate, String details, int idflaw, String description, String district, String address, double latitude, double longitude) {
         this.idrequest = idrequest;
         this.date = date;
         this.idcar = idcar;
@@ -24,6 +29,10 @@ public class Request extends SugarRecord {
         this.details = details;
         this.idflaw = idflaw;
         this.description = description;
+        this.district = district;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getIdrequest() {
@@ -86,6 +95,42 @@ public class Request extends SugarRecord {
 
     public Request setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public Request setDistrict(String district) {
+        this.district = district;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Request setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public Request setLatitude(double latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public Request setLongitude(double longitude) {
+        this.longitude = longitude;
         return this;
     }
 }
