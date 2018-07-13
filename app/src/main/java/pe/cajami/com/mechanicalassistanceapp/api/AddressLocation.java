@@ -7,6 +7,8 @@ public class AddressLocation {
     private String country;
     private String postalCode;
     private String knownName; // Only if available else return NULL
+    private double latitude;
+    private double longitude;
 
     public AddressLocation() {
         this.address = "";
@@ -17,13 +19,15 @@ public class AddressLocation {
         this.knownName = "";
     }
 
-    public AddressLocation(String address, String city, String state, String country, String postalCode, String knownName) {
+    public AddressLocation(String address, String city, String state, String country, String postalCode, String knownName, double latitude, double longitude) {
         this.address = address;
         this.city = city;
         this.state = state;
         this.country = country;
         this.postalCode = postalCode;
         this.knownName = knownName;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getAddress() {
@@ -77,6 +81,24 @@ public class AddressLocation {
 
     public AddressLocation setKnownName(String knownName) {
         this.knownName = knownName;
+        return this;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public AddressLocation setLatitude(double latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public AddressLocation setLongitude(double longitude) {
+        this.longitude = longitude;
         return this;
     }
 }

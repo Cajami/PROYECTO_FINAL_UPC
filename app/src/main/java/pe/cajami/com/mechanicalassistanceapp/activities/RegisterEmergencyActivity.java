@@ -1,6 +1,8 @@
 package pe.cajami.com.mechanicalassistanceapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -45,12 +47,10 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
     EditText txtDetalle_RegisterEmergency;
     Button btnRegistrarEmergencia_RegisterEmergency;
 
-    Double latitude = -12.0775;
-    Double longitude = -77.0934;
-    AddressLocation addressLocation;
+    AddressLocation addressLocation = null;
     FusedLocationProviderClient mFusedLocationClient;
 
-
+    String token = "";
     List<Flaw> arrayFallas;
 
     @Override
@@ -64,6 +64,8 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
 
         btnRegistrarEmergencia_RegisterEmergency.setOnClickListener(btnRegistrarEmergenciaOnClickListener);
         txtDetalle_RegisterEmergency.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
+        token = FunctionsGeneral.getToken(RegisterEmergencyActivity.this);
 
         getFlaws();
     }
@@ -88,24 +90,9 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_COARSE_LOCATION) // ask single or multiple permission once
                     .subscribe(granted -> {
                         if (granted) {
-
                             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(RegisterEmergencyActivity.this);
-
-                            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                return;
-                            }
-
                             getLastLocation();
-
                         } else {
-                            // At least one permission is denied
                             FunctionsGeneral.showMessageConfirmationUser(RegisterEmergencyActivity.this, "Debe aceptar el permiso para compartir ubicación para registrar una emergencia",
                                     new DialogInterface.OnClickListener() {
                                         @Override
@@ -151,14 +138,13 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
 
     @SuppressWarnings("MissingPermission")
     private void getLastLocation() {
+
         mFusedLocationClient.getLastLocation()
                 .addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
-                            latitude = task.getResult().getLatitude();
-                            longitude = task.getResult().getLongitude();
-                            addressLocation = FunctionsGeneral.getAddrees(RegisterEmergencyActivity.this, latitude, longitude);
+                            addressLocation = FunctionsGeneral.getAddrees(RegisterEmergencyActivity.this, task.getResult().getLatitude(), task.getResult().getLongitude());
                         } else {
                             addressLocation = new AddressLocation();
                         }
@@ -176,16 +162,33 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
                 return;
             }
 
+            if (addressLocation == null) {
+                FunctionsGeneral.showMessageErrorUser(RegisterEmergencyActivity.this, "Ubicación no encontrada aún");
+                return;
+            }
+
+            final ProgressDialog mProgressDialog = new ProgressDialog(RegisterEmergencyActivity.this);
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.setMessage("Registrando...");
+            mProgressDialog.show();
+
             AndroidNetworking.post(MechanicalApi.insertRequests())
                     .addBodyParameter("idcar", String.valueOf(cars.get(0).getIdcar()))
                     .addBodyParameter("details", txtDetalle_RegisterEmergency.getText().toString().trim())
                     .addBodyParameter("idflaw", String.valueOf(arrayFallas.get(cboTipoEmergencia_RegisterEmergency.getSelectedItemPosition()).getIdflaw()))
+                    .addBodyParameter("district", addressLocation.getCity())
+                    .addBodyParameter("address", addressLocation.getAddress())
+                    .addBodyParameter("latitude", String.valueOf(addressLocation.getLatitude()))
+                    .addBodyParameter("longitude", String.valueOf(addressLocation.getLongitude()))
+                    .addBodyParameter("token", token)
                     .setTag(getString(R.string.tagMechanical))
                     .setPriority(Priority.MEDIUM)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            mProgressDialog.dismiss();
+
                             try {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -213,6 +216,7 @@ public class RegisterEmergencyActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(ANError anError) {
+                            mProgressDialog.dismiss();
                             FunctionsGeneral.showMessageErrorUser(RegisterEmergencyActivity.this, "Error!!!");
                         }
                     });

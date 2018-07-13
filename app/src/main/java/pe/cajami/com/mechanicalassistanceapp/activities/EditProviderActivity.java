@@ -65,8 +65,7 @@ public class EditProviderActivity extends AppCompatActivity {
 
         btnGuardarModificaion_EditProviver.setOnClickListener(btnGuardar_OnClickListener);
 
-        SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
-        token = mPrefs.getString("token", "");
+        token = FunctionsGeneral.getToken(EditProviderActivity.this);
 
         provider = Provider.listAll(Provider.class).get(0);
 
@@ -282,7 +281,7 @@ public class EditProviderActivity extends AppCompatActivity {
                     .addBodyParameter("email", provider.getEmail())
                     .addBodyParameter("contact", provider.getContact())
                     .addBodyParameter("web", provider.getWeb())
-                    .addBodyParameter("longitude",String.valueOf(provider.getLongitude()))
+                    .addBodyParameter("longitude", String.valueOf(provider.getLongitude()))
                     .addBodyParameter("latitude", String.valueOf(provider.getLatitude()))
                     .addBodyParameter("token", token)
                     .setTag(getString(R.string.tagMechanical))

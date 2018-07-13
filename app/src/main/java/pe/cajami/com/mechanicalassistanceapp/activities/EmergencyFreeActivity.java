@@ -1,137 +1,134 @@
 package pe.cajami.com.mechanicalassistanceapp.activities;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.support.annotation.NonNull;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
-import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import pe.cajami.com.mechanicalassistanceapp.R;
+import pe.cajami.com.mechanicalassistanceapp.adapters.AdapterEmergencyFree;
 import pe.cajami.com.mechanicalassistanceapp.api.AddressLocation;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
+import pe.cajami.com.mechanicalassistanceapp.api.MechanicalApi;
+import pe.cajami.com.mechanicalassistanceapp.models.Request;
 
 public class EmergencyFreeActivity extends AppCompatActivity {
 
-    Double latitude = -12.0775;
-    Double longitude = -77.0934;
-    Geocoder geocoder;
+    RecyclerView rvEmergenciasLibres;
+    GridLayoutManager emergencyLayoutManager;
+    AdapterEmergencyFree emergencyAdapter;
+    List<Request> requests;
 
-    private static final String TAG = EmergencyFreeActivity.class.getSimpleName();
-
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-
-    /**
-     * Provides the entry point to the Fused Location Provider API.
-     */
-    private FusedLocationProviderClient mFusedLocationClient;
-
-    /**
-     * Represents a geographical location.
-     */
-    protected Location mLastLocation;
-
+    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_free);
 
-        RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions
-                .request(Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) // ask single or multiple permission once
-                .subscribe(granted -> {
-                    if (granted) {
+        rvEmergenciasLibres = (RecyclerView) findViewById(R.id.rvEmergenciasLibres);
 
-                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-                        getLastLocation();
 
-                        if (true) return;
+        requests = new ArrayList<>();
+        emergencyAdapter = new AdapterEmergencyFree(requests);
+        emergencyLayoutManager = new GridLayoutManager(EmergencyFreeActivity.this,1);
 
-                        Geocoder geocoder;
-                        List<Address> addresses;
-                        geocoder = new Geocoder(this, Locale.getDefault());
+        rvEmergenciasLibres.setAdapter(emergencyAdapter);
+        rvEmergenciasLibres.setLayoutManager(emergencyLayoutManager);
+
+        token = FunctionsGeneral.getToken(EmergencyFreeActivity.this);
+
+        getEmergenciesFree();
+
+    }
+
+    public void getEmergenciesFree() {
+
+        final ProgressDialog mProgressDialog = new ProgressDialog(EmergencyFreeActivity.this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setMessage("Recuperando...");
+        mProgressDialog.show();
+
+        AndroidNetworking.get(MechanicalApi.getEmergenciesFree())
+                .addHeaders("token", token)
+                .setTag(getString(R.string.tagMechanical))
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        mProgressDialog.dismiss();
 
                         try {
-                            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                            JSONArray requestArray = response.getJSONArray("request");
 
-                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                            String city = addresses.get(0).getLocality();
-                            String state = addresses.get(0).getAdminArea();
-                            String country = addresses.get(0).getCountryName();
-                            String postalCode = addresses.get(0).getPostalCode();
-                            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                            String iiiiii = "";
-                            FunctionsGeneral.showMessageToast(EmergencyFreeActivity.this, city);
-                        } catch (IOException e) {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+                            if (requests.size()>0)
+                                requests = new ArrayList<>();
+
+                            Request request = null;
+                            for (int i = 0; i < requestArray.length(); i++) {
+                                request = new Request();
+                                request.setIdrequest(requestArray.getJSONObject(i).getInt("idrequest"))
+                                        .setDate(dateFormat.parse(requestArray.getJSONObject(i).getString("date")))
+                                        .setIdcar(requestArray.getJSONObject(i).getInt("idcar"))
+                                        .setDetails(requestArray.getJSONObject(i).getString("details"))
+                                        .setIdflaw(requestArray.getJSONObject(i).getInt("idflaw"))
+                                        .setDistrict(requestArray.getJSONObject(i).getString("district"))
+                                        .setAddress(requestArray.getJSONObject(i).getString("address"))
+                                        .setLatitude(requestArray.getJSONObject(i).getDouble("latitude"))
+                                        .setLongitude(requestArray.getJSONObject(i).getDouble("longitude"))
+                                        .setDescription(requestArray.getJSONObject(i).getString("description"));
+                                requests.add(request);
+                            }
+
+                            emergencyAdapter.setRequests(requests);
+                            emergencyAdapter.notifyDataSetChanged();
+
+
+
+                            /*
+                            {"request":[
+                            {"idrequest":14,"date":"2018-07-13T15:41:56.000Z","idcar":5,"idstate":"P","details":"POR FAVOR URGENTE","idflaw":1,
+                            "district":"Cercado de Lima","address":"Wari 522, Cercado de Lima 15003, Perú","latitude":-12.0497795,
+                            "longitude":-77.014019,"description":"PONCHADO DE LLANTA"},
+
+
+                            {"idrequest":15,"date":"2018-07-13T15:42:43.000Z","idcar":5,"idstate":"P","details":"DEBO LLEGAR A MI REUNION LO ANTES POSIBLE",
+                            "idflaw":3,"district":"Cercado de Lima","address":"Wari 522, Cercado de Lima 15003, Perú","latitude":-12.0497795,"longitude":-77.014019,
+                            "description":"AUTO NO ARRANCA"}]}
+
+
+                             */
+
+
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
-                    } else {
-                        // At least one permission is denied
-                        FunctionsGeneral.showMessageToast(EmergencyFreeActivity.this, "denagado");
-
                     }
-                });
-    }
 
-    /**
-     * Provides a simple way of getting a device's location and is well suited for
-     * applications that do not require a fine-grained location and that do not need location
-     * updates. Gets the best and most recent location currently available, which may be null
-     * in rare cases when a location is not available.
-     * <p>
-     * Note: this method should be called after location permission has been granted.
-     */
-    @SuppressWarnings("MissingPermission")
-    private void getLastLocation() {
-        mFusedLocationClient.getLastLocation()
-                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            mLastLocation = task.getResult();
-                            latitude = mLastLocation.getLatitude();
-                            longitude = mLastLocation.getLongitude();
-
-
-                            AddressLocation addressLocation = FunctionsGeneral.getAddrees(EmergencyFreeActivity.this,latitude,longitude);
-                            FunctionsGeneral.showMessageToast(EmergencyFreeActivity.this,"la ciudad es "+ addressLocation.getCity());
-
-
-//                            mLatitudeText.setText(String.format(Locale.ENGLISH, "%s: %f",
-//                                    mLatitudeLabel,
-//                                    mLastLocation.getLatitude()));
-//                            mLongitudeText.setText(String.format(Locale.ENGLISH, "%s: %f",
-//                                    mLongitudeLabel,
-//                                    mLastLocation.getLongitude()));
-                        } else {
-//                            Log.w(TAG, "getLastLocation:exception", task.getException());
-//                            showSnackbar(getString(R.string.no_location_detected));
-                            FunctionsGeneral.showMessageToast(EmergencyFreeActivity.this, "No se pudo");
-                        }
+                    public void onError(ANError anError) {
+                        mProgressDialog.dismiss();
+                        FunctionsGeneral.showMessageErrorUser(EmergencyFreeActivity.this, "Error!!!");
                     }
                 });
-    }
 
+    }
 
 }

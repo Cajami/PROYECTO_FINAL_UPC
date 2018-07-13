@@ -13,7 +13,7 @@ import java.util.List;
 import pe.cajami.com.mechanicalassistanceapp.R;
 import pe.cajami.com.mechanicalassistanceapp.models.Request;
 
-public class AdapterEmergencyFree extends RecyclerView.Adapter<AdapterEmergencyFree.ViewHolder>{
+public class AdapterEmergencyFree extends RecyclerView.Adapter<AdapterEmergencyFree.ViewHolder> {
 
     List<Request> requests;
 
@@ -37,17 +37,18 @@ public class AdapterEmergencyFree extends RecyclerView.Adapter<AdapterEmergencyF
     @Override
     public void onBindViewHolder(@NonNull AdapterEmergencyFree.ViewHolder viewHolder, int i) {
         Request article = requests.get(i);
-        viewHolder.updateViewFrom(article);
+        viewHolder.updateViewFrom(article, i);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return requests.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView lblDistrito,lblTipoEmergencia,lblDetalle,lblNumeracion;
+        private TextView lblDistrito, lblTipoEmergencia, lblDetalle, lblNumeracion;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             lblDistrito = (TextView) itemView.findViewById(R.id.lblDistrito);
@@ -56,8 +57,11 @@ public class AdapterEmergencyFree extends RecyclerView.Adapter<AdapterEmergencyF
             lblNumeracion = (TextView) itemView.findViewById(R.id.lblNumeracion);
         }
 
-        public void updateViewFrom(Request request){
-
+        public void updateViewFrom(Request request, int position) {
+            lblDistrito.setText(request.getDistrict());
+            lblTipoEmergencia.setText(request.getDescription());
+            lblDetalle.setText(request.getDetails());
+            lblNumeracion.setText(String.format("%04d", (position + 1)));
         }
     }
 }
