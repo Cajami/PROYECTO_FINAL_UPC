@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.List;
+
 import pe.cajami.com.mechanicalassistanceapp.R;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.models.Customer;
+import pe.cajami.com.mechanicalassistanceapp.models.Request;
 
 public class MainCustomerActivity extends AppCompatActivity {
 
@@ -38,7 +41,7 @@ public class MainCustomerActivity extends AppCompatActivity {
     View.OnClickListener btnEditarUsuario_OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainCustomerActivity.this,EditCustomerActivity.class);
+            Intent intent = new Intent(MainCustomerActivity.this, EditCustomerActivity.class);
             startActivity(intent);
         }
     };
@@ -48,20 +51,26 @@ public class MainCustomerActivity extends AppCompatActivity {
         public void onClick(View view) {
             Customer customer = Customer.listAll(Customer.class).get(0);
 
-            if (customer.getName()==null){
-                FunctionsGeneral.showMessageErrorUser(MainCustomerActivity.this,"Debe registrar sus datos antes de reportar emergencias");
+            if (customer.getName() == null) {
+                FunctionsGeneral.showMessageErrorUser(MainCustomerActivity.this, "Debe registrar sus datos antes de reportar emergencias");
                 return;
             }
 
-            Intent intent = new Intent(MainCustomerActivity.this,RegisterEmergencyActivity.class);
-            startActivity(intent);
+            List<Request> requests = Request.find(Request.class, "idstate = ? or idstate = ?", new String[]{"P", "C"});
+            if (requests.size() > 0) {
+                FunctionsGeneral.showMessageAlertUser(MainCustomerActivity.this, getString(R.string.tagMechanical), "Ya cuenta con una emergencia reportada", null);
+            } else {
+
+                Intent intent = new Intent(MainCustomerActivity.this, RegisterEmergencyActivity.class);
+                startActivity(intent);
+            }
         }
     };
 
     View.OnClickListener btnEmergenciaPendienteOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainCustomerActivity.this,EmergencyPendingActivity.class);
+            Intent intent = new Intent(MainCustomerActivity.this, EmergencyPendingActivity.class);
             startActivity(intent);
         }
     };

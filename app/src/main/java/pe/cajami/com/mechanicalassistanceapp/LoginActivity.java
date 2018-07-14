@@ -29,7 +29,9 @@ import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.api.MechanicalApi;
 import pe.cajami.com.mechanicalassistanceapp.models.Car;
 import pe.cajami.com.mechanicalassistanceapp.models.Customer;
+import pe.cajami.com.mechanicalassistanceapp.models.Flaw;
 import pe.cajami.com.mechanicalassistanceapp.models.Provider;
+import pe.cajami.com.mechanicalassistanceapp.models.Request;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -122,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Customer.deleteAll(Customer.class);
                                     Provider.deleteAll(Provider.class);
                                     Car.deleteAll(Car.class);
+                                    Request.deleteAll(Request.class);
+                                    Flaw.deleteAll(Flaw.class);
 
                                     Intent intent = null;
 
@@ -154,6 +158,32 @@ public class LoginActivity extends AppCompatActivity {
                                                         .setIdbrand(carResponde.getJSONObject(0).getInt("idbrand"))
                                                         .setModel(carResponde.getJSONObject(0).getString("modelo"))
                                                         .setYear(carResponde.getJSONObject(0).getInt("year"))
+                                                        .save();
+                                            }
+
+                                            JSONArray requestPending = response.getJSONArray("request");
+                                            Request request = null;
+                                            for (int i=0;i<requestPending.length();i++){
+                                                request = new Request();
+                                                request.setIdrequest(requestPending.getJSONObject(i).getInt("idrequest"))
+                                                        .setDate(FunctionsGeneral.getStringToDate(requestPending.getJSONObject(i).getString("date")))
+                                                        .setIdcar(requestPending.getJSONObject(i).getInt("idcar"))
+                                                        .setIdstate(requestPending.getJSONObject(i).getString("idstate"))
+                                                        .setDetails(requestPending.getJSONObject(i).getString("details"))
+                                                        .setIdflaw(requestPending.getJSONObject(i).getInt("idflaw"))
+                                                        .setDistrict(requestPending.getJSONObject(i).getString("district"))
+                                                        .setAddress(requestPending.getJSONObject(i).getString("address"))
+                                                        .setLatitude(requestPending.getJSONObject(i).getDouble("latitude"))
+                                                        .setLongitude(requestPending.getJSONObject(i).getDouble("longitude"))
+                                                        .save();
+                                            }
+
+                                            JSONArray requestFlaws = response.getJSONArray("flaw");
+                                            Flaw flaw = null;
+                                            for (int i=0;i<requestFlaws.length();i++){
+                                                flaw = new Flaw();
+                                                flaw.setIdflaw(requestFlaws.getJSONObject(i).getInt("idflaw"))
+                                                        .setDescription(requestFlaws.getJSONObject(i).getString("description"))
                                                         .save();
                                             }
                                         }
