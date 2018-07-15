@@ -1,12 +1,15 @@
 package pe.cajami.com.mechanicalassistanceapp.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,13 +46,14 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
     Button btnFinalizarEmergencia;
     GMapV2Direction md = new GMapV2Direction();
 
+    static final int MAP_CONTACT_REQUEST = 1;  // The request code
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_maps);
 
-        List<Request> requests = Request.find(Request.class, "idstate = ?", "C");
+       List<Request> requests = Request.find(Request.class, "idstate = ?", "C");
 
         if (requests.size() == 0) {
             FunctionsGeneral.showMessageAlertUser(EmergencyMapsActivity.this, getString(R.string.tagMechanical),
@@ -84,6 +88,7 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
 
 
         btnFinalizarEmergencia = (Button) findViewById(R.id.btnFinalizarEmergencia);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -115,15 +120,28 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(requestHistoryLatLng, 16));
 
-        new ClassDocumentLatLng(md.getUrl(requestLatLng,requestHistoryLatLng,GMapV2Direction.MODE_DRIVING)).execute();
+        new ClassDocumentLatLng(md.getUrl(requestLatLng, requestHistoryLatLng, GMapV2Direction.MODE_DRIVING)).execute();
     }
 
     View.OnClickListener btnFinalizarEmergenciaOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent(EmergencyMapsActivity.this,EmergencyFinishActivity.class);
+            startActivityForResult(intent, MAP_CONTACT_REQUEST);
+            //    setResult(RESULT_OK, intent);
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == MAP_CONTACT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                finish();
+            }
+        }
+    }
 
     class ClassDocumentLatLng extends AsyncTask<String, Void, Document> {
 

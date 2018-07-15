@@ -42,5 +42,10 @@
     <string name="distancia">Distancia</string>
     <string name="title_activity_emergency_maps">Map</string>
     <string name="finalizar_emergencia">Finalizar Emergencia</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="nombres_raz_n_social">Nombres / Razón Social</string>
+    <string name="calificaci_n">Calificación</string>
+    <string name="observaci_n_adicional">Observación Adicional</string>
+    <string name="agregar_a_favoritos">Agregar a Favoritos</string>
 
 </resources>

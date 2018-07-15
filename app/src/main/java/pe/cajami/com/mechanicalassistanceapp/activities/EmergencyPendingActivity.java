@@ -89,6 +89,13 @@ public class EmergencyPendingActivity extends AppCompatActivity implements Adapt
         lblDetalle.setText(requests.get(0).getDetails());
         lblFechaRegistro.setText(FunctionsGeneral.getDateToString(requests.get(0).getDate()));
 
+        btnRefrescar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getEmergencyProvidersPostulate();
+            }
+        });
+
         getEmergencyProvidersPostulate();
     }
 

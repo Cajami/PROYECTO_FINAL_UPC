@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/marginTop10dp"
+    tools:context=".activities.EmergencyFinishActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/width120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tipo_emergencia"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblTipoEmergencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/width120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/detalle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblDetalle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/width120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fecha_registro"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblFechaRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop15dp"
+            android:text="@string/nombres_raz_n_social"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/marginTop15dp"
+            android:layout_marginTop="@dimen/marginTop15dp"
+            android:background="#b9b8b8" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/width120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/calificaci_n"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:max="4"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/lblCalificacion"
+                android:layout_width="@dimen/width80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/marginTop20dp"
+                android:text="1"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop10dp"
+            android:text="@string/observaci_n_adicional"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/txtObservacionAdicional"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/width80dp" />
+
+        <Switch
+            android:id="@+id/switchAgregarFavorito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop10dp"
+            android:text="@string/agregar_a_favoritos" />
+
+        <Button
+            android:id="@+id/btnFinalizarEmergencia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="@dimen/marginTop20dp"
+            android:text="@string/finalizar"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

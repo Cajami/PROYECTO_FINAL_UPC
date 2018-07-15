@@ -82,7 +82,8 @@
 
         <activity
             android:name=".activities.EmergencyMapsActivity"
-            android:label="@string/title_activity_emergency_maps"></activity>
+            android:label="@string/title_activity_emergency_maps" />
+        <activity android:name=".activities.EmergencyFinishActivity"></activity>
     </application>
 
 </manifest>

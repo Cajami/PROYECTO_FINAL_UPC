@@ -21,10 +21,14 @@ public class Request extends SugarRecord {
     private double latitude;
     private double longitude;
 
+    private String observation;
+    private int score;
+    private Date datefinished;
+
     public Request() {
     }
 
-    public Request(int idrequest, Date date, int idcar, String idstate, String details, int idflaw, String description, String district, String address, double latitude, double longitude) {
+    public Request(int idrequest, Date date, int idcar, String idstate, String details, int idflaw, String description, String district, String address, double latitude, double longitude, String observation, int score, Date datefinished) {
         this.idrequest = idrequest;
         this.date = date;
         this.idcar = idcar;
@@ -36,6 +40,9 @@ public class Request extends SugarRecord {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.observation = observation;
+        this.score = score;
+        this.datefinished = datefinished;
     }
 
     public int getIdrequest() {
@@ -137,37 +144,30 @@ public class Request extends SugarRecord {
         return this;
     }
 
-    public Bundle toBundle() {
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("idrequest", this.idrequest);
-        bundle.putString("date", FunctionsGeneral.getDateToString(this.date));
-        bundle.putInt("idcar", this.idcar);
-        bundle.putString("idstate", this.idstate);
-        bundle.putString("details", this.details);
-        bundle.putString("description", this.description);
-        bundle.putString("district", this.district);
-        bundle.putString("address", this.address);
-        bundle.putDouble("latitude", this.latitude);
-        bundle.putDouble("longitude", this.longitude);
-        bundle.putInt("idflaw", this.idflaw);
-        return bundle;
+    public String getObservation() {
+        return observation;
     }
 
-    public static Request toBuilder(Bundle bundle) {
-        Request request = new Request();
-        request.setIdrequest(bundle.getInt("idrequest"))
-                .setDate(FunctionsGeneral.getStringToDate(bundle.getString("date")))
-                .setIdcar(bundle.getInt("idcar"))
-                .setIdstate(bundle.getString("idstate"))
-                .setDetails(bundle.getString("details"))
-                .setDescription(bundle.getString("description"))
-                .setDistrict(bundle.getString("district"))
-                .setAddress(bundle.getString("address"))
-                .setLatitude(bundle.getDouble("latitude"))
-                .setLongitude(bundle.getDouble("longitude"))
-                .setIdflaw(bundle.getInt("idflaw"));
-        return request;
+    public Request setObservation(String observation) {
+        this.observation = observation;
+        return this;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public Request setScore(int score) {
+        this.score = score;
+        return this;
+    }
+
+    public Date getDatefinished() {
+        return datefinished;
+    }
+
+    public Request setDatefinished(Date datefinished) {
+        this.datefinished = datefinished;
+        return this;
+    }
 }
