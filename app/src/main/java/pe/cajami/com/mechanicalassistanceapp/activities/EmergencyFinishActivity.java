@@ -35,7 +35,7 @@ import pe.cajami.com.mechanicalassistanceapp.models.RequestHistory;
 public class EmergencyFinishActivity extends AppCompatActivity {
 
     SeekBar seekBar;
-    TextView lblCalificacion, lblTipoEmergencia, lblDetalle, lblFechaRegistro;
+    TextView lblCalificacion, lblTipoEmergencia, lblDetalle, lblFechaRegistro, lblNombreProveedor;
     Request request;
     RequestHistory requestHistory;
     Button btnFinalizarEmergencia;
@@ -54,6 +54,7 @@ public class EmergencyFinishActivity extends AppCompatActivity {
         lblTipoEmergencia = (TextView) findViewById(R.id.lblTipoEmergencia);
         lblDetalle = (TextView) findViewById(R.id.lblDetalle);
         lblFechaRegistro = (TextView) findViewById(R.id.lblFechaRegistro);
+        lblNombreProveedor = (TextView) findViewById(R.id.lblNombreProveedor);
 
         txtObservacionAdicional = (EditText) findViewById(R.id.txtObservacionAdicional);
         btnFinalizarEmergencia = (Button) findViewById(R.id.btnFinalizarEmergencia);
@@ -108,7 +109,7 @@ public class EmergencyFinishActivity extends AppCompatActivity {
 
         lblDetalle.setText(requests.get(0).getDetails());
         lblFechaRegistro.setText(FunctionsGeneral.getDateToString(requests.get(0).getDate()));
-
+        lblNombreProveedor.setText(requestHistory.getNameProvider());
         btnFinalizarEmergencia.setOnClickListener(btnFinalizarEmergenciaOnClickListener);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -47,5 +47,6 @@
     <string name="calificaci_n">Calificación</string>
     <string name="observaci_n_adicional">Observación Adicional</string>
     <string name="agregar_a_favoritos">Agregar a Favoritos</string>
+    <string name="fecha_atenci_n">Fecha Atención</string>
 
 </resources>

@@ -192,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         .setDate(FunctionsGeneral.getStringToDate(response.getJSONObject("requestHistory").getString("date")))
                                                         .setIdstate(response.getJSONObject("requestHistory").getString("idstate"))
                                                         .setIdprovider(response.getJSONObject("requestHistory").getInt("idprovider"))
+                                                        .setNameProvider(response.getJSONObject("requestHistory").getString("nameProveedor"))
                                                         .setLatitude(response.getJSONObject("requestHistory").getDouble("latitude"))
                                                         .setLongitude(response.getJSONObject("requestHistory").getDouble("longitude"))
                                                         .save();
