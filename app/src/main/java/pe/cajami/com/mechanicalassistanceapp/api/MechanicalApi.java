@@ -78,8 +78,9 @@ public class MechanicalApi {
         return urlApi() + "getEmergencyHistories";
     }
 
-
-
+    public static String getProviders() {
+        return urlApi() + "getProviders";
+    }
 
 
 }

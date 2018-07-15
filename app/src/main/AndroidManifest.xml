@@ -87,7 +87,10 @@
             android:name=".activities.EmergencyFinishActivity"
             android:label="Finalizar Emergencia"
             android:parentActivityName=".activities.EmergencyMapsActivity" />
-        <activity android:name=".activities.EmergencyHistoryActivity"></activity>
+        <activity android:name=".activities.EmergencyHistoryActivity" />
+        <activity android:name=".activities.ListProviderActivity"
+            android:label="Lista de Proveedores"
+            android:parentActivityName=".activities.MainCustomerActivity"></activity>
     </application>
 
 </manifest>

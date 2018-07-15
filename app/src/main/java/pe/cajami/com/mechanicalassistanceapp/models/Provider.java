@@ -6,6 +6,7 @@ public class Provider extends SugarRecord {
 
     private int idprovider;
     private int itypedocument;
+    private String descriptionTypeDocument;
     private String nrodocument;
     private String name;
     private String address;
@@ -23,9 +24,10 @@ public class Provider extends SugarRecord {
     public Provider() {
     }
 
-    public Provider(int idprovider, int itypedocument, String nrodocument, String name, String address, int iddistrict, String contact, String phone, String email, String web, double longitude, double latitude, int score, String schedule, int iduser) {
+    public Provider(int idprovider, int itypedocument, String descriptionTypeDocument, String nrodocument, String name, String address, int iddistrict, String contact, String phone, String email, String web, double longitude, double latitude, int score, String schedule, int iduser) {
         this.idprovider = idprovider;
         this.itypedocument = itypedocument;
+        this.descriptionTypeDocument = descriptionTypeDocument;
         this.nrodocument = nrodocument;
         this.name = name;
         this.address = address;
@@ -173,6 +175,15 @@ public class Provider extends SugarRecord {
 
     public Provider setIduser(int iduser) {
         this.iduser = iduser;
+        return this;
+    }
+
+    public String getDescriptionTypeDocument() {
+        return descriptionTypeDocument;
+    }
+
+    public Provider setDescriptionTypeDocument(String descriptionTypeDocument) {
+        this.descriptionTypeDocument = descriptionTypeDocument;
         return this;
     }
 }

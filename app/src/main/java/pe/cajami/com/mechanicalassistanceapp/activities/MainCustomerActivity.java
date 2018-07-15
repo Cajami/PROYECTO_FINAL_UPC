@@ -43,6 +43,14 @@ public class MainCustomerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnVerProveedores_MainUsuer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainCustomerActivity.this, ListProviderActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     View.OnClickListener btnEditarUsuario_OnClickListener = new View.OnClickListener() {
