@@ -18,9 +18,15 @@ import pe.cajami.com.mechanicalassistanceapp.models.RequestHistory;
 public class AdapterEmergencyProviders extends RecyclerView.Adapter<AdapterEmergencyProviders.ViewHolder> {
 
     List<RequestHistory> requestHistories;
+    private AdapterCallback callback;
 
-    public AdapterEmergencyProviders(List<RequestHistory> requestHistories) {
+    public interface AdapterCallback {
+        void onClickCallback(RequestHistory item, int position);
+    }
+
+    public AdapterEmergencyProviders(List<RequestHistory> requestHistories, AdapterCallback adapterCallback) {
         this.requestHistories = requestHistories;
+        this.callback = adapterCallback;
     }
 
     public AdapterEmergencyProviders setRequestHistories(List<RequestHistory> requestHistories) {
@@ -38,7 +44,8 @@ public class AdapterEmergencyProviders extends RecyclerView.Adapter<AdapterEmerg
 
     @Override
     public void onBindViewHolder(@NonNull AdapterEmergencyProviders.ViewHolder viewHolder, int i) {
-
+        RequestHistory requestHistory = requestHistories.get(i);
+        viewHolder.updateViewFrom(requestHistory, i);
     }
 
     @Override
@@ -61,10 +68,10 @@ public class AdapterEmergencyProviders extends RecyclerView.Adapter<AdapterEmerg
             emergencyCardView = (CardView) itemView.findViewById(R.id.emergencyCardView);
         }
 
-        public void updateFrom(final RequestHistory requestHistory, int position) {
+        public void updateViewFrom(final RequestHistory requestHistory, final int position) {
             lblNumeracion.setText(String.format("%03d", (position + 1)));
             lblProveedor.setText(requestHistory.getNameProvider());
-            lblPuntuacion.setText(requestHistory.getScoreProvider());
+            lblPuntuacion.setText(String.valueOf(requestHistory.getScoreProvider()));
 
             locationA = new Location("punto A");
             locationA.setLatitude(requestHistory.getLatitudeParent());
@@ -72,19 +79,14 @@ public class AdapterEmergencyProviders extends RecyclerView.Adapter<AdapterEmerg
             locationB = new Location("punto B");
             locationB.setLatitude(requestHistory.getLatitude());
             locationB.setLongitude(requestHistory.getLongitude());
-            lblPuntuacion.setText(String.valueOf(locationA.distanceTo(locationB)));
+            lblDistancia.setText(String.format("%.2f", locationA.distanceTo(locationB) / 1000) + " kilometros");
 
             emergencyCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-
+                    callback.onClickCallback(requestHistory, position);
                 }
             });
-
-
-
-
         }
     }
 }

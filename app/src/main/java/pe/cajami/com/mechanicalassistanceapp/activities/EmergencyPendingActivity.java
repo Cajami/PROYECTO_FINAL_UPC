@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.internal.operators.flowable.FlowableMergeWithCompletable;
 import pe.cajami.com.mechanicalassistanceapp.R;
 import pe.cajami.com.mechanicalassistanceapp.adapters.AdapterEmergencyProviders;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
@@ -29,7 +32,7 @@ import pe.cajami.com.mechanicalassistanceapp.models.Flaw;
 import pe.cajami.com.mechanicalassistanceapp.models.Request;
 import pe.cajami.com.mechanicalassistanceapp.models.RequestHistory;
 
-public class EmergencyPendingActivity extends AppCompatActivity {
+public class EmergencyPendingActivity extends AppCompatActivity implements AdapterEmergencyProviders.AdapterCallback {
 
     List<Request> requests;
     TextView lblTipoEmergencia, lblDetalle, lblFechaRegistro;
@@ -38,7 +41,6 @@ public class EmergencyPendingActivity extends AppCompatActivity {
     String token;
 
     RecyclerView rvProveedores;
-    GridLayoutManager emergencyLayoutManager;
     AdapterEmergencyProviders adapterEmergencyProviders;
     List<RequestHistory> requestHistories;
 
@@ -50,7 +52,7 @@ public class EmergencyPendingActivity extends AppCompatActivity {
         requests = Request.find(Request.class, "idstate = ?", "P");
 
         if (requests.size() == 0) {
-            FunctionsGeneral.showMessageAlertUser(EmergencyPendingActivity.this, "Sn Datos", "No cuenta con Emergencias Pendientes",
+            FunctionsGeneral.showMessageAlertUser(EmergencyPendingActivity.this, "Sin Datos", "No cuenta con Emergencias Pendientes",
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -72,11 +74,10 @@ public class EmergencyPendingActivity extends AppCompatActivity {
         rvProveedores = (RecyclerView) findViewById(R.id.rvProveedores);
 
         requestHistories = new ArrayList<>();
-        adapterEmergencyProviders = new AdapterEmergencyProviders(requestHistories);
-        emergencyLayoutManager = new GridLayoutManager(EmergencyPendingActivity.this, 1);
+        adapterEmergencyProviders = new AdapterEmergencyProviders(requestHistories, this);
 
         rvProveedores.setAdapter(adapterEmergencyProviders);
-        rvProveedores.setLayoutManager(emergencyLayoutManager);
+        rvProveedores.setLayoutManager(new LinearLayoutManager(this));
 
         for (int i = 0; i < arrayFallas.size(); i++) {
             if (requests.get(0).getIdflaw() == arrayFallas.get(0).getIdflaw()) {
@@ -98,7 +99,8 @@ public class EmergencyPendingActivity extends AppCompatActivity {
         mProgressDialog.show();
 
         AndroidNetworking.post(MechanicalApi.getEmergencyProviders())
-                .addHeaders("token", token)
+                .addBodyParameter("idrequest", String.valueOf(requests.get(0).getIdrequest()))
+                .addBodyParameter("token", token)
                 .setTag(getString(R.string.tagMechanical))
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -122,6 +124,7 @@ public class EmergencyPendingActivity extends AppCompatActivity {
                                         .setIdstate(requestArray.getJSONObject(i).getString("idstate"))
                                         .setIdprovider(requestArray.getJSONObject(i).getInt("idprovider"))
                                         .setNameProvider(requestArray.getJSONObject(i).getString("name"))
+                                        .setScoreProvider(requestArray.getJSONObject(i).getInt("score"))
                                         .setLatitude(requestArray.getJSONObject(i).getDouble("latitude"))
                                         .setLongitude(requestArray.getJSONObject(i).getDouble("longitude"))
                                         .setLatitudeParent(requests.get(0).getLatitude())
@@ -132,7 +135,6 @@ public class EmergencyPendingActivity extends AppCompatActivity {
 
                             adapterEmergencyProviders.setRequestHistories(requestHistories);
                             adapterEmergencyProviders.notifyDataSetChanged();
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -145,5 +147,63 @@ public class EmergencyPendingActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public void onClickCallback(final RequestHistory item, int position) {
+        FunctionsGeneral.showMessageConfirmationUser(EmergencyPendingActivity.this,
+                "¿Acepta que el proveedor " + item.getNameProvider() + " atienda su emergencia?",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog mProgressDialog = new ProgressDialog(EmergencyPendingActivity.this);
+                        mProgressDialog.setCanceledOnTouchOutside(false);
+                        mProgressDialog.setMessage("Asociando Emergencia...");
+                        mProgressDialog.show();
+
+                        AndroidNetworking.post(MechanicalApi.setEmergencyToProviders())
+                                .addBodyParameter("idrequest", String.valueOf(requests.get(0).getIdrequest()))
+                                .addBodyParameter("idrequesthistory", String.valueOf(item.getIdrequesthistory()))
+                                .addBodyParameter("token", token)
+                                .setTag(getString(R.string.tagMechanical))
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        mProgressDialog.dismiss();
+
+                                        try {
+                                           if (response.has("message")){
+                                               FunctionsGeneral.showMessageAlertUser(EmergencyPendingActivity.this,getString(R.string.tagMechanical),response.getString("message"),null);
+                                           }else{
+                                               requests.get(0).setIdstate(response.getJSONObject("request").getString("idstate"))
+                                                       .save();
+
+                                               FunctionsGeneral.showMessageAlertUser(EmergencyPendingActivity.this,
+                                                       getString(R.string.tagMechanical),
+                                                       "Emergencia Asociada al proveedor: " + item.getNameProvider(),
+                                                       new DialogInterface.OnClickListener() {
+                                                           @Override
+                                                           public void onClick(DialogInterface dialogInterface, int i) {
+                                                               finish();
+                                                           }
+                                                       });
+                                           }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(ANError anError) {
+                                        mProgressDialog.dismiss();
+                                        FunctionsGeneral.showMessageErrorUser(EmergencyPendingActivity.this, "Error!!!");
+                                    }
+                                });
+
+
+                    }
+                }, null);
     }
 }

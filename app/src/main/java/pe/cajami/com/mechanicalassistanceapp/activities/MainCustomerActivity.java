@@ -70,7 +70,20 @@ public class MainCustomerActivity extends AppCompatActivity {
     View.OnClickListener btnEmergenciaPendienteOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainCustomerActivity.this, EmergencyPendingActivity.class);
+            Intent intent = null;
+
+            List<Request> requests = Request.find(Request.class, "idstate = ?", "P");
+
+            if (requests.size() == 0) {
+                requests = Request.find(Request.class, "idstate = ?", "C");
+                if (requests.size() == 0) {
+                    FunctionsGeneral.showMessageAlertUser(MainCustomerActivity.this, "Sin Datos", "No cuenta con Emergencias Pendientes Registradas", null);
+                    return;
+                } else
+                    intent = new Intent(MainCustomerActivity.this, EmergencyPendingActivity.class);
+            } else
+                intent = new Intent(MainCustomerActivity.this, EmergencyPendingActivity.class);
+
             startActivity(intent);
         }
     };

@@ -13,7 +13,7 @@ public class RequestHistory extends SugarRecord {
     private double latitude;
     private double longitude;
     private String nameProvider;
-    private String scoreProvider;
+    private int scoreProvider;
 
     private double latitudeParent;
     private double longitudeParent;
@@ -21,7 +21,7 @@ public class RequestHistory extends SugarRecord {
     public RequestHistory() {
     }
 
-    public RequestHistory(int idrequesthistory, int idrequest, Date date, String idstate, int idprovider, double latitude, double longitude, String nameProvider, String scoreProvider, double latitudeParent, double longitudeParent) {
+    public RequestHistory(int idrequesthistory, int idrequest, Date date, String idstate, int idprovider, double latitude, double longitude, String nameProvider, int scoreProvider, double latitudeParent, double longitudeParent) {
         this.idrequesthistory = idrequesthistory;
         this.idrequest = idrequest;
         this.date = date;
@@ -107,11 +107,11 @@ public class RequestHistory extends SugarRecord {
         return this;
     }
 
-    public String getScoreProvider() {
+    public int getScoreProvider() {
         return scoreProvider;
     }
 
-    public RequestHistory setScoreProvider(String scoreProvider) {
+    public RequestHistory setScoreProvider(int scoreProvider) {
         this.scoreProvider = scoreProvider;
         return this;
     }

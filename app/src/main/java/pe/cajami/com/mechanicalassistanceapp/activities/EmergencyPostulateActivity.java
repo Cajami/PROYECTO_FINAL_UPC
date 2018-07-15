@@ -88,13 +88,13 @@ public class EmergencyPostulateActivity extends AppCompatActivity {
                         updateViewFrom();
                         getHistory();
                     } else {
-                        FunctionsGeneral.showMessageConfirmationUser(EmergencyPostulateActivity.this, "Debe aceptar el permiso para compartir ubicación",
+                        FunctionsGeneral.showMessageAlertUser(EmergencyPostulateActivity.this, getString(R.string.tagMechanical), "Debe aceptar el permiso para compartir ubicación",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         finish();
                                     }
-                                }, null);
+                                });
 
                     }
                 });
@@ -213,7 +213,7 @@ public class EmergencyPostulateActivity extends AppCompatActivity {
                                                 requestHistory.setIdrequesthistory(requestJSON.getInt("idrequesthistory"))
                                                         .setDate(FunctionsGeneral.getStringToDate(requestJSON.getString("date")));
 
-                                                FunctionsGeneral.showMessageAlertUser(EmergencyPostulateActivity.this, "Registro Exitoso","Se registró su postulación" , new DialogInterface.OnClickListener() {
+                                                FunctionsGeneral.showMessageAlertUser(EmergencyPostulateActivity.this, "Registro Exitoso", "Se registró su postulación", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         finish();

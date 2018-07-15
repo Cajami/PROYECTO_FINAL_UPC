@@ -115,6 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                                 mProgressDialog.dismiss();
 
                                 try {
+                                    if (response.has("message")) {
+                                        FunctionsGeneral.showMessageAlertUser(LoginActivity.this, getString(R.string.tagMechanical), response.getString("message"), null);
+                                        return;
+                                    }
+
                                     SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
                                     SharedPreferences.Editor editor = mPrefs.edit();
                                     editor.putString("token", response.getString("token"));
@@ -151,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     .setEmail(customerResponde.getString("email"));
 
                                             JSONArray carResponde = response.getJSONArray("car");
-                                            if (carResponde.length()>0){
+                                            if (carResponde.length() > 0) {
                                                 Car car = new Car();
                                                 car.setIdcar(carResponde.getJSONObject(0).getInt("idcar"))
                                                         .setIdcustomer(carResponde.getJSONObject(0).getInt("idcustomer"))
@@ -163,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                             JSONArray requestPending = response.getJSONArray("request");
                                             Request request = null;
-                                            for (int i=0;i<requestPending.length();i++){
+                                            for (int i = 0; i < requestPending.length(); i++) {
                                                 request = new Request();
                                                 request.setIdrequest(requestPending.getJSONObject(i).getInt("idrequest"))
                                                         .setDate(FunctionsGeneral.getStringToDate(requestPending.getJSONObject(i).getString("date")))
@@ -180,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                             JSONArray requestFlaws = response.getJSONArray("flaw");
                                             Flaw flaw = null;
-                                            for (int i=0;i<requestFlaws.length();i++){
+                                            for (int i = 0; i < requestFlaws.length(); i++) {
                                                 flaw = new Flaw();
                                                 flaw.setIdflaw(requestFlaws.getJSONObject(i).getInt("idflaw"))
                                                         .setDescription(requestFlaws.getJSONObject(i).getString("description"))
@@ -214,9 +219,9 @@ public class LoginActivity extends AppCompatActivity {
                                                     .setLatitude(providerResponde.getDouble("latitude"));
 
                                             if (!providerResponde.isNull("score"))
-                                                    provider.setScore(providerResponde.getInt("score"));
+                                                provider.setScore(providerResponde.getInt("score"));
                                             if (!providerResponde.isNull("schedule"))
-                                                    provider.setSchedule(providerResponde.getString("schedule"));
+                                                provider.setSchedule(providerResponde.getString("schedule"));
                                         }
                                         provider.save();
                                     }
