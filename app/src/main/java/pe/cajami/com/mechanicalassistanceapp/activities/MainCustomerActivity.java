@@ -80,7 +80,7 @@ public class MainCustomerActivity extends AppCompatActivity {
                     FunctionsGeneral.showMessageAlertUser(MainCustomerActivity.this, "Sin Datos", "No cuenta con Emergencias Pendientes Registradas", null);
                     return;
                 } else
-                    intent = new Intent(MainCustomerActivity.this, EmergencyPendingActivity.class);
+                    intent = new Intent(MainCustomerActivity.this, EmergencyMapsActivity.class);
             } else
                 intent = new Intent(MainCustomerActivity.this, EmergencyPendingActivity.class);
 

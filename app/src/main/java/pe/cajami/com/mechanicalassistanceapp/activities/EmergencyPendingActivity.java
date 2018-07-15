@@ -180,6 +180,9 @@ public class EmergencyPendingActivity extends AppCompatActivity implements Adapt
                                                requests.get(0).setIdstate(response.getJSONObject("request").getString("idstate"))
                                                        .save();
 
+                                               item.setIdstate(response.getJSONObject("requesthistory").getString("idstate"))
+                                                       .save();
+
                                                FunctionsGeneral.showMessageAlertUser(EmergencyPendingActivity.this,
                                                        getString(R.string.tagMechanical),
                                                        "Emergencia Asociada al proveedor: " + item.getNameProvider(),

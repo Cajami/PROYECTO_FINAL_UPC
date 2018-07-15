@@ -41,5 +41,6 @@
     <string name="puntuacion">Puntuación</string>
     <string name="distancia">Distancia</string>
     <string name="title_activity_emergency_maps">Map</string>
+    <string name="finalizar_emergencia">Finalizar Emergencia</string>
 
 </resources>
