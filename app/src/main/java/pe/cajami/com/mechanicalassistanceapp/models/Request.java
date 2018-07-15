@@ -170,4 +170,46 @@ public class Request extends SugarRecord {
         this.datefinished = datefinished;
         return this;
     }
+
+    public Bundle toBundle() {
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("idrequest", this.idrequest);
+        bundle.putString("date", FunctionsGeneral.getDateToString(this.date));
+        bundle.putInt("idcar", this.idcar);
+        bundle.putString("idstate", this.idstate);
+        bundle.putString("details", this.details);
+        bundle.putString("description", this.description);
+        bundle.putString("district", this.district);
+        bundle.putString("address", this.address);
+        bundle.putDouble("latitude", this.latitude);
+        bundle.putDouble("longitude", this.longitude);
+        bundle.putInt("idflaw", this.idflaw);
+
+        bundle.putString("observation",this.observation);
+        bundle.putString("datefinished", FunctionsGeneral.getDateToString(this.datefinished));
+        bundle.putInt("score",this.score);
+
+        return bundle;
+    }
+
+    public static Request toBuilder(Bundle bundle) {
+        Request request = new Request();
+        request.setIdrequest(bundle.getInt("idrequest"))
+                .setDate(FunctionsGeneral.getStringToDate(bundle.getString("date")))
+                .setIdcar(bundle.getInt("idcar"))
+                .setIdstate(bundle.getString("idstate"))
+                .setDetails(bundle.getString("details"))
+                .setDescription(bundle.getString("description"))
+                .setDistrict(bundle.getString("district"))
+                .setAddress(bundle.getString("address"))
+                .setLatitude(bundle.getDouble("latitude"))
+                .setLongitude(bundle.getDouble("longitude"))
+                .setIdflaw(bundle.getInt("idflaw"))
+                .setObservation(bundle.getString("observation"))
+                .setScore(bundle.getInt("score"))
+                .setDatefinished(FunctionsGeneral.getStringToDate(bundle.getString("datefinished")));
+
+        return request;
+    }
 }

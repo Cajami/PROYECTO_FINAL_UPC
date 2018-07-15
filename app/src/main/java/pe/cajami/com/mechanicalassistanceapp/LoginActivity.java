@@ -32,6 +32,7 @@ import pe.cajami.com.mechanicalassistanceapp.models.Customer;
 import pe.cajami.com.mechanicalassistanceapp.models.Flaw;
 import pe.cajami.com.mechanicalassistanceapp.models.Provider;
 import pe.cajami.com.mechanicalassistanceapp.models.Request;
+import pe.cajami.com.mechanicalassistanceapp.models.RequestHistory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -130,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Provider.deleteAll(Provider.class);
                                     Car.deleteAll(Car.class);
                                     Request.deleteAll(Request.class);
+                                    RequestHistory.deleteAll(RequestHistory.class);
                                     Flaw.deleteAll(Flaw.class);
 
                                     Intent intent = null;
@@ -180,6 +182,18 @@ public class LoginActivity extends AppCompatActivity {
                                                         .setAddress(requestPending.getJSONObject(i).getString("address"))
                                                         .setLatitude(requestPending.getJSONObject(i).getDouble("latitude"))
                                                         .setLongitude(requestPending.getJSONObject(i).getDouble("longitude"))
+                                                        .save();
+                                            }
+
+                                            if (response.has("requestHistory")){
+                                                RequestHistory requestHistory = new RequestHistory();
+                                                requestHistory.setIdrequesthistory(response.getJSONObject("requestHistory").getInt("idrequesthistory"))
+                                                        .setIdrequest(response.getJSONObject("requestHistory").getInt("idrequest"))
+                                                        .setDate(FunctionsGeneral.getStringToDate(response.getJSONObject("requestHistory").getString("date")))
+                                                        .setIdstate(response.getJSONObject("requestHistory").getString("idstate"))
+                                                        .setIdprovider(response.getJSONObject("requestHistory").getInt("idprovider"))
+                                                        .setLatitude(response.getJSONObject("requestHistory").getDouble("latitude"))
+                                                        .setLongitude(response.getJSONObject("requestHistory").getDouble("longitude"))
                                                         .save();
                                             }
 

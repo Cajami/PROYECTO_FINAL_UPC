@@ -70,5 +70,9 @@ public class MechanicalApi {
         return urlApi() + "setEmergencyToProviders";
     }
 
+    public static String setEmergencyFinishs() {
+        return urlApi() + "setEmergencyFinishs";
+    }
+
 
 }

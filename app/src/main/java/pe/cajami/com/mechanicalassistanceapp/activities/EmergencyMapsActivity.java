@@ -53,7 +53,7 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_maps);
 
-       List<Request> requests = Request.find(Request.class, "idstate = ?", "C");
+        List<Request> requests = Request.find(Request.class, "idstate = ?", "C");
 
         if (requests.size() == 0) {
             FunctionsGeneral.showMessageAlertUser(EmergencyMapsActivity.this, getString(R.string.tagMechanical),
@@ -113,10 +113,10 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
 
         // Add a marker in Sydney and move the camera
         LatLng requestLatLng = new LatLng(request.getLatitude(), request.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(requestLatLng).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(requestLatLng).title("CLIENTE"));
 
         LatLng requestHistoryLatLng = new LatLng(requestHistory.getLatitude(), requestHistory.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(requestHistoryLatLng).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(requestHistoryLatLng).title("PROVEEDOR"));
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(requestHistoryLatLng, 16));
 
@@ -126,7 +126,7 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
     View.OnClickListener btnFinalizarEmergenciaOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(EmergencyMapsActivity.this,EmergencyFinishActivity.class);
+            Intent intent = new Intent(EmergencyMapsActivity.this, EmergencyFinishActivity.class);
             startActivityForResult(intent, MAP_CONTACT_REQUEST);
             //    setResult(RESULT_OK, intent);
         }
@@ -170,11 +170,13 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
         }
 
         protected void onPostExecute(Document doc) {
-            if (doc == null)
+            if (doc == null) {
+                FunctionsGeneral.showMessageToast(EmergencyMapsActivity.this, "Ruta incompleta!!!");
                 return;
+            }
 
             ArrayList<LatLng> directionPoint = md.getDirection(doc);
-            PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.RED);
+            PolylineOptions rectLine = new PolylineOptions().width(8).color(Color.RED);
 
             for (int i = 0; i < directionPoint.size(); i++) {
                 rectLine.add(directionPoint.get(i));
