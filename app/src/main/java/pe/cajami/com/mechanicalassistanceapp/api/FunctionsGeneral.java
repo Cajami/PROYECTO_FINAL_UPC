@@ -122,8 +122,14 @@ public class FunctionsGeneral {
     }
 
     public static String getDateToString(Date fecha) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return dateFormat.format(fecha);
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return dateFormat.format(fecha);
+        }catch (Exception e){
+            return "";
+
+        }
+
     }
 
     public static Date getStringToDate(String fecha) {

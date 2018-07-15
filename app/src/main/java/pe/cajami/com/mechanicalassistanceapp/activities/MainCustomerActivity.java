@@ -1,13 +1,16 @@
 package pe.cajami.com.mechanicalassistanceapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
+import pe.cajami.com.mechanicalassistanceapp.LoginActivity;
 import pe.cajami.com.mechanicalassistanceapp.R;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.models.Customer;
@@ -20,6 +23,8 @@ public class MainCustomerActivity extends AppCompatActivity {
             btnVerProveedores_MainUsuer,
             btnEditarUsuario_MainUsuer,
             btnRegistrarEmergencia_MainUsuer;
+
+    TextView lblCerrarSesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,8 @@ public class MainCustomerActivity extends AppCompatActivity {
         btnEmergenciaPendiente_MainUsuer.setOnClickListener(btnEmergenciaPendienteOnClickListener);
         btnRegistrarEmergencia_MainUsuer.setOnClickListener(btnRegistrarEmergencia_OnClickListener);
 
+        lblCerrarSesion = (TextView) findViewById(R.id.lblCerrarSesion);
+
         btnVerHistorialEmergencias_MainUsuer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,8 +54,21 @@ public class MainCustomerActivity extends AppCompatActivity {
         btnVerProveedores_MainUsuer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(MainCustomerActivity.this, ListProviderActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        lblCerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences  = getApplicationContext().getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE);
+
+                sharedPreferences.edit().clear().commit();
+                Intent intent = new Intent(MainCustomerActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

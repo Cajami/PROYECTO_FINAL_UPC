@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 //            return;
 
         SharedPreferences mPrefs = getSharedPreferences(getString(R.string.keypreference), MODE_PRIVATE); //add key
-
+String iiii =mPrefs.getString("token", "");
         if (mPrefs.getString("token", "").length() > 0) {
             Intent intent = null;
 

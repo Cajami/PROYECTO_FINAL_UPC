@@ -34,6 +34,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import pe.cajami.com.mechanicalassistanceapp.R;
 import pe.cajami.com.mechanicalassistanceapp.api.FunctionsGeneral;
 import pe.cajami.com.mechanicalassistanceapp.api.GMapV2Direction;
+import pe.cajami.com.mechanicalassistanceapp.api.MechanicalApi;
 import pe.cajami.com.mechanicalassistanceapp.models.Request;
 import pe.cajami.com.mechanicalassistanceapp.models.RequestHistory;
 
@@ -120,7 +121,11 @@ public class EmergencyMapsActivity extends FragmentActivity implements OnMapRead
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(requestHistoryLatLng, 16));
 
-        new ClassDocumentLatLng(md.getUrl(requestLatLng, requestHistoryLatLng, GMapV2Direction.MODE_DRIVING)).execute();
+        FunctionsGeneral.showMessageToast(EmergencyMapsActivity.this,
+                String.valueOf(request.getLatitude())+"-"+String.valueOf(request.getLongitude())+"-"+
+                        String.valueOf(requestHistory.getLatitude())+"-"+String.valueOf(requestHistory.getLatitude()));
+
+        //new ClassDocumentLatLng(md.getUrl(requestLatLng, requestHistoryLatLng, GMapV2Direction.MODE_DRIVING)).execute();
     }
 
     View.OnClickListener btnFinalizarEmergenciaOnClickListener = new View.OnClickListener() {

@@ -54,6 +54,16 @@
             android:text="@string/registrar_emergencia"
             android:textColor="@color/colorBlanco"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblCerrarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cerrar_sesion"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="#442dd7"
+            android:layout_marginTop="@dimen/marginTop20dp"/>
     </LinearLayout>
 
 

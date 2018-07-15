@@ -1,8 +1,8 @@
 package pe.cajami.com.mechanicalassistanceapp.api;
 
 public class MechanicalApi {
-    //private static String BASE_URL = "https://mechanical-assistance-cajamisoft.c9users.io/";
-    private static String BASE_URL = "http://192.168.1.6:3000/";
+    private static String BASE_URL = "https://mechanical-assistance-cajamisoft.c9users.io/";
+    //private static String BASE_URL = "http://192.168.1.6:3000/";
 
 
     public static String loginApi() {
